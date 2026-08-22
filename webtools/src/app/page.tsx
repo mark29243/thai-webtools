@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { QrCode, KeyRound, WholeWord, FileJson, Palette } from 'lucide-react'
+import { QrCode, KeyRound, WholeWord, FileJson, Palette, Hash } from 'lucide-react'
 import { AdSlot } from '@/components/AdSlot'
 
 const tools = [
@@ -37,6 +37,13 @@ const tools = [
     description: 'แปลงโค้ดสี HEX, RGB, HSL สลับไปมา',
     icon: <Palette className="w-8 h-8 text-pink-500" />,
     href: '/tools/color-converter',
+  },
+  {
+    id: 'base64',
+    name: 'Base64 Encoder',
+    description: 'เข้ารหัสและถอดรหัสข้อความรูปแบบ Base64',
+    icon: <Hash className="w-8 h-8 text-indigo-500" />,
+    href: '/tools/base64',
   },
 ]
 
