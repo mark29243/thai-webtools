@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { QrCode, KeyRound, WholeWord, FileJson, Palette, Hash } from 'lucide-react'
+import { QrCode, KeyRound, WholeWord, FileJson, Palette, Hash, Link as LinkIcon, Calculator, FileText } from 'lucide-react'
 import { AdSlot } from '@/components/AdSlot'
 
 const tools = [
@@ -45,6 +45,27 @@ const tools = [
     icon: <Hash className="w-8 h-8 text-indigo-500" />,
     href: '/tools/base64',
   },
+  {
+    id: 'url-encoder',
+    name: 'URL Encoder',
+    description: 'เข้ารหัส URL เพื่อให้ส่งข้อมูลผ่านอินเทอร์เน็ตได้อย่างปลอดภัย',
+    icon: <LinkIcon className="w-8 h-8 text-teal-500" />,
+    href: '/tools/url-encoder',
+  },
+  {
+    id: 'bmi-calculator',
+    name: 'BMI Calculator',
+    description: 'คำนวณดัชนีมวลกาย ตรวจสอบความสมดุลของน้ำหนักและส่วนสูง',
+    icon: <Calculator className="w-8 h-8 text-red-500" />,
+    href: '/tools/bmi-calculator',
+  },
+  {
+    id: 'lorem-ipsum',
+    name: 'Lorem Ipsum Gen.',
+    description: 'สร้างข้อความจำลองสำหรับนักออกแบบและนักพัฒนาเว็บไซต์',
+    icon: <FileText className="w-8 h-8 text-gray-500" />,
+    href: '/tools/lorem-ipsum',
+  },
 ]
 
 export default function Home() {
@@ -60,7 +81,7 @@ export default function Home() {
       <AdSlot className="my-8" />
 
       <section>
-        <h2 className="text-2xl font-semibold mb-6">เครื่องมือทั้งหมด</h2>
+        <h2 className="text-2xl font-semibold mb-6">เครื่องมือทั้งหมด ({tools.length})</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {tools.map((tool) => (
             <Link 
