@@ -4,8 +4,6 @@ import { useState, useRef, useEffect } from 'react'
 import { AdSlot } from '@/components/AdSlot'
 import { FileUp, FileText, Loader2, Copy, Trash2, Languages } from 'lucide-react'
 import toast from 'react-hot-toast'
-import Tesseract from 'tesseract.js'
-import * as pdfjsLib from 'pdfjs-dist'
 
 export default function PdfOcrPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
@@ -18,8 +16,10 @@ export default function PdfOcrPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
-    // Configure PDF.js worker
-    pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.mjs`
+    // Configure PDF.js worker dynamically to avoid SSR errors
+    import('pdfjs-dist').then(pdfjsLib => {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.mjs`
+    }).catch(console.error)
   }, [])
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,6 +49,7 @@ export default function PdfOcrPage() {
 
       if (selectedFile.type === 'application/pdf') {
         toast.success('กำลังอ่านไฟล์ PDF...', { duration: 2000 })
+        const pdfjsLib = await import('pdfjs-dist')
         const arrayBuffer = await selectedFile.arrayBuffer()
         const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer })
         const pdf = await loadingTask.promise
@@ -78,6 +79,7 @@ export default function PdfOcrPage() {
 
       toast.success('กำลังสกัดข้อความ (OCR)...', { duration: 3000 })
       
+      const Tesseract = (await import('tesseract.js')).default
       const result = await Tesseract.recognize(
         imageSource,
         language,
