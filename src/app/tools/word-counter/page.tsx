@@ -57,7 +57,7 @@ export default function WordCounterPage() {
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="พิมพ์หรือวางข้อความที่นี่..."
-          className="w-full min-h-[300px] border-none focus:ring-0 resize-y outline-none bg-transparent text-gray-900 dark:text-gray-100 placeholder-gray-400"
+          className="w-full min-h-[300px] border-none focus:ring-0 resize-y outline-none bg-transparent text-gray-900 dark:text-gray-100 placeholder-gray-400 break-words"
         />
         <div className="flex justify-between items-center pt-4 border-t dark:border-gray-800 mt-4">
           <button

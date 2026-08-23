@@ -90,16 +90,16 @@ export default function MathToolPage({ params }: { params: Promise<{ action: str
           </div>
         </div>
 
-        <div className="bg-blue-50 dark:bg-blue-900/10 p-6 md:p-8 rounded-3xl border border-blue-100 dark:border-blue-900/30 flex flex-col justify-center">
+        <div className="bg-blue-50 dark:bg-blue-900/10 p-6 md:p-8 rounded-3xl border border-blue-100 dark:border-blue-900/30 flex flex-col justify-center overflow-hidden">
           <h2 className="font-semibold text-blue-800 dark:text-blue-300 mb-4 opacity-80 text-sm uppercase tracking-wider">ผลลัพธ์</h2>
-          <div className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6 leading-snug">
+          <div className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6 leading-snug break-words">
             {output.result}
           </div>
           
           {output.details && output.details.length > 0 && (
             <div className="space-y-3 pt-6 border-t border-blue-200 dark:border-blue-800/50">
               {output.details.map((desc, idx) => (
-                <div key={idx} className="text-gray-700 dark:text-gray-300">
+                <div key={idx} className="text-gray-700 dark:text-gray-300 break-words">
                   {desc}
                 </div>
               ))}

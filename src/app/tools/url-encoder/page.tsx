@@ -43,7 +43,7 @@ export default function UrlEncoderPage() {
           <div className="space-y-2">
             <label className="block font-medium text-sm text-gray-700">ข้อความต้นฉบับ</label>
             <textarea
-              className="w-full h-48 border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full h-48 border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500 break-all resize-none"
               placeholder={mode === 'encode' ? 'https://example.com/?q=ภาษาไทย' : 'https%3A%2F%2Fexample.com%2F%3Fq%3D%E0%B8%A0%E0%B8%B2%E0%B8%A9%E0%B8%B2%E0%B9%84%E0%B8%97%E0%B8%A2'}
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -52,7 +52,7 @@ export default function UrlEncoderPage() {
           <div className="space-y-2">
             <label className="block font-medium text-sm text-gray-700">ผลลัพธ์</label>
             <textarea
-              className="w-full h-48 bg-gray-50 border rounded-lg p-3 outline-none"
+              className="w-full h-48 bg-gray-50 border rounded-lg p-3 outline-none break-all resize-none"
               readOnly
               value={output}
             />

@@ -54,7 +54,7 @@ export default function TextToolPage({ params }: { params: Promise<{ action: str
 
       <div className="bg-white dark:bg-gray-900 p-6 md:p-8 rounded-3xl shadow-sm border dark:border-gray-800 space-y-6">
         
-        <div className="space-y-4">
+        <div className="space-y-4 w-full">
           <div className="flex justify-between items-center">
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
               ข้อความต้นฉบับ (Input)
@@ -69,12 +69,12 @@ export default function TextToolPage({ params }: { params: Promise<{ action: str
           <textarea 
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="w-full h-48 p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+            className="w-full h-48 p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 resize-none break-words"
             placeholder={tool.placeholder}
           />
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-4 w-full">
           <div className="flex justify-between items-center">
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
               ผลลัพธ์ (Output)
@@ -90,7 +90,7 @@ export default function TextToolPage({ params }: { params: Promise<{ action: str
           <textarea 
             value={output}
             readOnly
-            className="w-full h-48 p-4 bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/30 rounded-2xl outline-none text-gray-800 dark:text-gray-200 resize-none font-medium"
+            className="w-full h-48 p-4 bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/30 rounded-2xl outline-none text-gray-800 dark:text-gray-200 resize-none font-medium break-words"
             placeholder="ผลลัพธ์จะแสดงที่นี่แบบเรียลไทม์..."
           />
         </div>

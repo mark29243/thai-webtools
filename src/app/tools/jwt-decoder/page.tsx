@@ -51,7 +51,7 @@ export default function JwtDecoderPage() {
         <div className="space-y-2">
           <label className="block font-medium text-sm text-gray-700">วาง JWT ของคุณที่นี่ (Encoded String)</label>
           <textarea
-            className="w-full h-32 border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm break-all"
+            className="w-full h-32 border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm break-all resize-none"
             placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
             value={token}
             onChange={(e) => decodeJWT(e.target.value)}
@@ -64,7 +64,7 @@ export default function JwtDecoderPage() {
           <div className="space-y-2">
             <h3 className="font-semibold text-rose-500">Header</h3>
             <textarea
-              className="w-full h-48 bg-rose-50 border border-rose-100 rounded-lg p-3 outline-none font-mono text-sm text-rose-900"
+              className="w-full h-48 bg-rose-50 border border-rose-100 rounded-lg p-3 outline-none font-mono text-sm text-rose-900 break-all resize-none"
               readOnly
               value={header}
               placeholder="Header JSON จะแสดงที่นี่..."
@@ -73,7 +73,7 @@ export default function JwtDecoderPage() {
           <div className="space-y-2">
             <h3 className="font-semibold text-purple-600">Payload (Data)</h3>
             <textarea
-              className="w-full h-64 bg-purple-50 border border-purple-100 rounded-lg p-3 outline-none font-mono text-sm text-purple-900"
+              className="w-full h-64 bg-purple-50 border border-purple-100 rounded-lg p-3 outline-none font-mono text-sm text-purple-900 break-all resize-none"
               readOnly
               value={payload}
               placeholder="Payload JSON จะแสดงที่นี่..."

@@ -51,7 +51,7 @@ export default function TextToBinaryPage() {
               {mode === 'text2bin' ? 'ข้อความ (Text)' : 'รหัสฐานสอง (Binary)'}
             </label>
             <textarea
-              className="w-full h-48 border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+              className="w-full h-48 border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500 font-mono break-all resize-none"
               placeholder={mode === 'text2bin' ? 'พิมพ์ข้อความ...' : '01101000 01100101 01101100 01101100 01101111'}
               value={text}
               onChange={(e) => setText(e.target.value)}
@@ -60,7 +60,7 @@ export default function TextToBinaryPage() {
           <div className="space-y-2">
             <label className="block font-medium text-sm text-gray-700">ผลลัพธ์ (Result)</label>
             <textarea
-              className="w-full h-48 bg-gray-50 border rounded-lg p-3 outline-none font-mono"
+              className="w-full h-48 bg-gray-50 border rounded-lg p-3 outline-none font-mono break-all resize-none"
               readOnly
               value={binary}
             />

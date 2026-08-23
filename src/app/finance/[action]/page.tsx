@@ -90,16 +90,16 @@ export default function FinanceToolPage({ params }: { params: Promise<{ action: 
         </div>
 
         {/* Output Panel */}
-        <div className="bg-green-50 dark:bg-green-900/10 p-6 md:p-8 rounded-3xl border border-green-100 dark:border-green-900/30 flex flex-col justify-center">
+        <div className="bg-green-50 dark:bg-green-900/10 p-6 md:p-8 rounded-3xl border border-green-100 dark:border-green-900/30 flex flex-col justify-center overflow-hidden">
           <h2 className="font-semibold text-green-800 dark:text-green-300 mb-4 opacity-80 text-sm uppercase tracking-wider">ผลการคำนวณ</h2>
-          <div className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6 leading-snug">
+          <div className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6 leading-snug break-words">
             {output.result}
           </div>
           
           {output.details && output.details.length > 0 && (
             <div className="space-y-3 pt-6 border-t border-green-200 dark:border-green-800/50">
               {output.details.map((desc, idx) => (
-                <div key={idx} className="text-gray-700 dark:text-gray-300">
+                <div key={idx} className="text-gray-700 dark:text-gray-300 break-words">
                   {desc}
                 </div>
               ))}

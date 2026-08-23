@@ -36,7 +36,7 @@ export default function QrCodePage() {
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">ข้อความหรือ URL</label>
             <textarea
-              className="w-full border dark:border-gray-700 rounded-xl p-4 min-h-[200px] bg-gray-50 dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-shadow"
+              className="w-full border dark:border-gray-700 rounded-xl p-4 min-h-[200px] bg-gray-50 dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 outline-none transition-shadow break-all resize-none"
               placeholder="พิมพ์ข้อความ ลิงก์เว็บไซต์ หรือเบอร์โทรศัพท์ที่นี่..."
               value={text}
               onChange={(e) => setText(e.target.value)}

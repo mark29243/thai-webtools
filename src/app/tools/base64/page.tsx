@@ -65,7 +65,7 @@ export default function Base64Page() {
               {mode === 'encode' ? 'ข้อความต้นฉบับ (Text)' : 'ข้อความ Base64'}
             </label>
             <textarea
-              className="w-full h-48 border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full h-48 border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500 break-all resize-none"
               placeholder={mode === 'encode' ? 'พิมพ์ข้อความที่ต้องการเข้ารหัส...' : 'วางโค้ด Base64 ที่นี่...'}
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -75,7 +75,7 @@ export default function Base64Page() {
           <div className="space-y-2">
             <label className="block font-medium text-sm text-gray-700">ผลลัพธ์ (Result)</label>
             <textarea
-              className="w-full h-48 bg-gray-50 border rounded-lg p-3 outline-none"
+              className="w-full h-48 bg-gray-50 border rounded-lg p-3 outline-none break-all resize-none"
               readOnly
               placeholder="ผลลัพธ์จะแสดงที่นี่..."
               value={output}

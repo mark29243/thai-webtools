@@ -79,13 +79,13 @@ export default function DevToolPage({ params }: { params: Promise<{ action: stri
           <textarea 
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="w-full h-48 p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl outline-none focus:ring-2 focus:ring-orange-500 resize-none font-mono text-sm"
+            className="w-full h-48 p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl outline-none focus:ring-2 focus:ring-orange-500 resize-none font-mono text-sm break-all"
             placeholder={tool.placeholder}
             spellCheck="false"
           />
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-4 w-full">
           <div className="flex justify-between items-center">
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
               ผลลัพธ์ (Output)
@@ -100,14 +100,14 @@ export default function DevToolPage({ params }: { params: Promise<{ action: stri
           </div>
           
           {error ? (
-            <div className="w-full p-4 bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-900/30 rounded-2xl text-red-600 dark:text-red-400">
+            <div className="w-full p-4 bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-900/30 rounded-2xl text-red-600 dark:text-red-400 break-words">
               {error}
             </div>
           ) : (
             <textarea 
               value={output}
               readOnly
-              className="w-full h-48 p-4 bg-orange-50 dark:bg-orange-900/10 border border-orange-100 dark:border-orange-900/30 rounded-2xl outline-none text-gray-800 dark:text-gray-200 resize-none font-mono text-sm"
+              className="w-full h-48 p-4 bg-orange-50 dark:bg-orange-900/10 border border-orange-100 dark:border-orange-900/30 rounded-2xl outline-none text-gray-800 dark:text-gray-200 resize-none font-mono text-sm break-all"
               placeholder="ผลลัพธ์จะแสดงที่นี่แบบเรียลไทม์..."
               spellCheck="false"
             />

@@ -60,7 +60,7 @@ export default function JsonFormatterPage() {
             </button>
           </div>
           <textarea
-            className="flex-1 w-full p-4 focus:outline-none resize-none font-mono text-sm bg-transparent"
+            className="flex-1 w-full p-4 focus:outline-none resize-none font-mono text-sm bg-transparent break-all"
             placeholder='{"name": "Thai WebTools", "awesome": true}'
             value={input}
             onChange={(e) => setInput(e.target.value)}
