@@ -180,7 +180,7 @@ export default function LotteryPage() {
             {/* Major Prizes Board */}
             <div className="pt-8 mt-8 border-t dark:border-gray-800">
               <h3 className="text-xl font-bold text-center mb-6 text-gray-800 dark:text-gray-200 flex items-center justify-center gap-2">
-                <Trophy className="w-5 h-5 text-yellow-500" /> สรุปผลรางวัลใหญ่
+                <Trophy className="w-5 h-5 text-yellow-500" /> สรุปผลรางวัล
               </h3>
               
               <div className="grid md:grid-cols-2 gap-6">
@@ -218,6 +218,51 @@ export default function LotteryPage() {
                       <p key={i} className="text-2xl font-bold text-gray-800 dark:text-gray-200 tracking-[0.15em]">{num}</p>
                     ))}
                   </div>
+                </div>
+              </div>
+              
+              <div className="mt-6 bg-gray-50 dark:bg-gray-800/50 p-6 rounded-2xl border border-gray-200 dark:border-gray-700">
+                <h4 className="font-semibold text-gray-600 dark:text-gray-400 mb-4">รางวัลข้างเคียงรางวัลที่ 1 (100,000 บาท)</h4>
+                <div className="flex flex-wrap gap-4">
+                  {getPrizeByPrefix('prizeFirstNear').map((num, i) => (
+                    <span key={i} className="text-lg font-bold text-gray-800 dark:text-gray-200 tracking-wider bg-white dark:bg-gray-900 px-4 py-2 rounded-lg border dark:border-gray-700 shadow-sm">{num}</span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-6 bg-gray-50 dark:bg-gray-800/50 p-6 rounded-2xl border border-gray-200 dark:border-gray-700">
+                <h4 className="font-semibold text-gray-600 dark:text-gray-400 mb-4">รางวัลที่ 2 (200,000 บาท)</h4>
+                <div className="flex flex-wrap gap-4">
+                  {getPrizeByPrefix('prizeSecond').map((num, i) => (
+                    <span key={i} className="text-lg font-bold text-gray-800 dark:text-gray-200 tracking-wider bg-white dark:bg-gray-900 px-4 py-2 rounded-lg border dark:border-gray-700 shadow-sm">{num}</span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-6 bg-gray-50 dark:bg-gray-800/50 p-6 rounded-2xl border border-gray-200 dark:border-gray-700">
+                <h4 className="font-semibold text-gray-600 dark:text-gray-400 mb-4">รางวัลที่ 3 (80,000 บาท)</h4>
+                <div className="flex flex-wrap gap-4">
+                  {getPrizeByPrefix('prizeThird').map((num, i) => (
+                    <span key={i} className="text-lg font-bold text-gray-800 dark:text-gray-200 tracking-wider bg-white dark:bg-gray-900 px-4 py-2 rounded-lg border dark:border-gray-700 shadow-sm">{num}</span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-6 bg-gray-50 dark:bg-gray-800/50 p-6 rounded-2xl border border-gray-200 dark:border-gray-700">
+                <h4 className="font-semibold text-gray-600 dark:text-gray-400 mb-4">รางวัลที่ 4 (40,000 บาท)</h4>
+                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3">
+                  {getPrizeByPrefix('prizeFourth').map((num, i) => (
+                    <span key={i} className="text-center font-bold text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-900 px-2 py-2 rounded-lg border dark:border-gray-700 shadow-sm">{num}</span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-6 bg-gray-50 dark:bg-gray-800/50 p-6 rounded-2xl border border-gray-200 dark:border-gray-700">
+                <h4 className="font-semibold text-gray-600 dark:text-gray-400 mb-4">รางวัลที่ 5 (20,000 บาท)</h4>
+                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
+                  {getPrizeByPrefix('prizeFifth').map((num, i) => (
+                    <span key={i} className="text-center font-bold text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-900 px-2 py-2 rounded-lg border dark:border-gray-700 shadow-sm">{num}</span>
+                  ))}
                 </div>
               </div>
               
