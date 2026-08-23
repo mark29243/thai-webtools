@@ -3,6 +3,9 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { QrCode, KeyRound, WholeWord, FileJson, Palette, Hash, Link as LinkIcon, Calculator, FileText, Fingerprint, Dices, Binary, Search, Key, Image as ImageIcon, FilePlus, Droplet, Info, RefreshCw } from 'lucide-react'
+import * as LucideIcons from 'lucide-react'
+import { textTools } from '@/data/text-tools'
+import { financeTools } from '@/data/finance-tools'
 
 const allCategories = [
   {
@@ -21,6 +24,16 @@ const allCategories = [
     tools: [
       { id: 'word-counter', name: 'Word Counter', desc: 'นับจำนวนคำและตัวอักษร', icon: <WholeWord className="w-8 h-8 text-purple-500" />, href: '/tools/word-counter' },
       { id: 'lorem-ipsum', name: 'Lorem Ipsum Gen.', desc: 'สร้างข้อความจำลอง (Dummy Text)', icon: <FileText className="w-8 h-8 text-gray-500" />, href: '/tools/lorem-ipsum' },
+      ...textTools.map(t => {
+        const IconComp = (LucideIcons as any)[t.icon] || LucideIcons.Type
+        return {
+          id: t.id,
+          name: t.name,
+          desc: t.desc,
+          icon: <IconComp className="w-8 h-8 text-amber-500" />,
+          href: `/text/${t.id}`
+        }
+      })
     ]
   },
   {
@@ -45,6 +58,21 @@ const allCategories = [
       { id: 'bmi-calculator', name: 'BMI Calculator', desc: 'คำนวณดัชนีมวลกาย', icon: <Calculator className="w-8 h-8 text-red-500" />, href: '/tools/bmi-calculator' },
       { id: 'color-converter', name: 'Color Converter', desc: 'แปลงโค้ดสี HEX, RGB, HSL', icon: <Palette className="w-8 h-8 text-pink-500" />, href: '/tools/color-converter' },
       { id: 'percentage', name: 'Percentage Calculator', desc: 'คำนวณหาค่าเปอร์เซ็นต์ ร้อยละ', icon: <Calculator className="w-8 h-8 text-amber-500" />, href: '/tools/percentage' },
+    ]
+  },
+  {
+    name: 'Finance & Calculators',
+    tools: [
+      ...financeTools.map(t => {
+        const IconComp = (LucideIcons as any)[t.icon] || LucideIcons.Calculator
+        return {
+          id: t.id,
+          name: t.name,
+          desc: t.desc,
+          icon: <IconComp className="w-8 h-8 text-green-500" />,
+          href: `/finance/${t.id}`
+        }
+      })
     ]
   },
   {

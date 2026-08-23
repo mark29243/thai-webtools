@@ -1,0 +1,114 @@
+'use client'
+
+import { use, useState, useEffect } from 'react'
+import { notFound } from 'next/navigation'
+import { financeTools } from '@/data/finance-tools'
+import { AdSlot } from '@/components/AdSlot'
+import { RotateCcw } from 'lucide-react'
+import * as LucideIcons from 'lucide-react'
+
+export default function FinanceToolPage({ params }: { params: Promise<{ action: string }> }) {
+  const resolvedParams = use(params)
+  const tool = financeTools.find(t => t.id === resolvedParams.action)
+  
+  if (!tool) {
+    notFound()
+  }
+
+  // Initialize state with default values
+  const [inputs, setInputs] = useState<Record<string, number>>(() => {
+    const initial: Record<string, number> = {}
+    tool.inputs.forEach(inp => {
+      initial[inp.name] = inp.default || 0
+    })
+    return initial
+  })
+
+  const [output, setOutput] = useState<{ result: string, details?: string[] }>({ result: '' })
+
+  const IconComponent = (LucideIcons as any)[tool.icon] || LucideIcons.Calculator
+
+  useEffect(() => {
+    try {
+      setOutput(tool.action(inputs))
+    } catch (e) {
+      setOutput({ result: 'เกิดข้อผิดพลาดในการคำนวณ' })
+    }
+  }, [inputs, tool])
+
+  const handleInputChange = (name: string, value: string) => {
+    setInputs(prev => ({ ...prev, [name]: parseFloat(value) || 0 }))
+  }
+
+  const handleReset = () => {
+    const initial: Record<string, number> = {}
+    tool.inputs.forEach(inp => {
+      initial[inp.name] = inp.default || 0
+    })
+    setInputs(initial)
+  }
+
+  return (
+    <div className="max-w-4xl mx-auto space-y-8">
+      <div>
+        <div className="flex items-center gap-3 mb-2">
+          <IconComponent className="w-8 h-8 text-green-600 dark:text-green-400" />
+          <h1 className="text-3xl font-bold">{tool.name}</h1>
+        </div>
+        <p className="text-gray-600 dark:text-gray-400">{tool.desc}</p>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-8">
+        {/* Input Panel */}
+        <div className="bg-white dark:bg-gray-900 p-6 md:p-8 rounded-3xl shadow-sm border dark:border-gray-800 space-y-6">
+          <div className="flex justify-between items-center mb-2">
+            <h2 className="font-semibold text-lg">ป้อนข้อมูล</h2>
+            <button 
+              onClick={handleReset}
+              className="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1 transition-colors"
+            >
+              <RotateCcw className="w-4 h-4" /> รีเซ็ต
+            </button>
+          </div>
+          
+          <div className="space-y-4">
+            {tool.inputs.map(inp => (
+              <div key={inp.name}>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  {inp.label}
+                </label>
+                <input 
+                  type="number"
+                  value={inputs[inp.name] || ''}
+                  onChange={(e) => handleInputChange(inp.name, e.target.value)}
+                  className="w-full p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl outline-none focus:ring-2 focus:ring-green-500 text-lg transition-shadow"
+                  placeholder={inp.placeholder}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Output Panel */}
+        <div className="bg-green-50 dark:bg-green-900/10 p-6 md:p-8 rounded-3xl border border-green-100 dark:border-green-900/30 flex flex-col justify-center">
+          <h2 className="font-semibold text-green-800 dark:text-green-300 mb-4 opacity-80 text-sm uppercase tracking-wider">ผลการคำนวณ</h2>
+          <div className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6 leading-snug">
+            {output.result}
+          </div>
+          
+          {output.details && output.details.length > 0 && (
+            <div className="space-y-3 pt-6 border-t border-green-200 dark:border-green-800/50">
+              {output.details.map((desc, idx) => (
+                <div key={idx} className="text-gray-700 dark:text-gray-300">
+                  {desc}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      <AdSlot />
+    </div>
+  )
+}
