@@ -12,9 +12,9 @@ export function Header() {
         </Link>
         <div className="flex items-center gap-6">
           <nav className="hidden md:flex gap-6 text-sm font-medium text-gray-600 dark:text-gray-300">
-            <Link href="/" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">หน้าแรก</Link>
+            <Link href="/" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">เครื่องมือ (Native)</Link>
+            <Link href="/directory" className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">สารบัญ AI (Directory)</Link>
             <Link href="/about" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">เกี่ยวกับเรา</Link>
-            <Link href="/contact" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">ติดต่อเรา</Link>
           </nav>
           <ThemeToggle />
         </div>

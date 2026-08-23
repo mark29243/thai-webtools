@@ -34,6 +34,16 @@ const allCategories = [
       { id: 'color-converter', name: 'Color Converter', desc: 'แปลงโค้ดสี HEX, RGB, HSL', icon: <Palette className="w-8 h-8 text-pink-500" />, href: '/tools/color-converter' },
       { id: 'percentage', name: 'Percentage Calculator', desc: 'คำนวณหาค่าเปอร์เซ็นต์ ร้อยละ', icon: <Calculator className="w-8 h-8 text-amber-500" />, href: '/tools/percentage' },
     ]
+  },
+  {
+    name: 'Unit Converters (เครื่องมือแปลงหน่วย)',
+    tools: [
+      { id: 'conv-length', name: 'แปลงหน่วยความยาว', desc: 'เมตร เซนติเมตร นิ้ว ฟุต', icon: <Calculator className="w-8 h-8 text-blue-500" />, href: '/converters/length' },
+      { id: 'conv-weight', name: 'แปลงหน่วยน้ำหนัก', desc: 'กิโลกรัม ปอนด์ กรัม', icon: <Calculator className="w-8 h-8 text-green-500" />, href: '/converters/weight' },
+      { id: 'conv-area', name: 'แปลงหน่วยพื้นที่', desc: 'ไร่ ตารางวา ตารางเมตร', icon: <Calculator className="w-8 h-8 text-yellow-500" />, href: '/converters/area' },
+      { id: 'conv-data', name: 'แปลงหน่วยข้อมูล', desc: 'Byte, KB, MB, GB, TB', icon: <Calculator className="w-8 h-8 text-purple-500" />, href: '/converters/data' },
+      { id: 'conv-time', name: 'แปลงหน่วยเวลา', desc: 'วินาที นาที ชั่วโมง วัน ปี', icon: <Calculator className="w-8 h-8 text-red-500" />, href: '/converters/time' },
+    ]
   }
 ]
 
