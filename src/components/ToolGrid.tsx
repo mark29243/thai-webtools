@@ -27,6 +27,8 @@ const allCategories = [
     name: 'Utilities & Everyday',
     tools: [
       { id: 'pdf-merge', name: 'Merge PDF', desc: 'รวมไฟล์ PDF เข้าด้วยกันในเครื่อง ปลอดภัย 100%', icon: <FilePlus className="w-8 h-8 text-blue-500" />, href: '/tools/pdf-merge' },
+      { id: 'pdf-split', name: 'Split PDF', desc: 'แยกหน้า PDF ที่ต้องการออกมา', icon: <FileText className="w-8 h-8 text-blue-500" />, href: '/tools/pdf-split' },
+      { id: 'image-to-pdf', name: 'Image to PDF', desc: 'แปลงรูปภาพ JPG, PNG เป็น PDF', icon: <ImageIcon className="w-8 h-8 text-blue-500" />, href: '/tools/image-to-pdf' },
       { id: 'qrcode', name: 'QR Code Generator', desc: 'สร้างคิวอาร์โค้ดฟรีไม่มีหมดอายุ', icon: <QrCode className="w-8 h-8 text-blue-500" />, href: '/tools/qrcode' },
       { id: 'image-compressor', name: 'Image Compressor', desc: 'ย่อขนาดรูปภาพ JPG/PNG แบบออฟไลน์', icon: <ImageIcon className="w-8 h-8 text-emerald-500" />, href: '/tools/image-compressor' },
       { id: 'password', name: 'Password Generator', desc: 'สุ่มรหัสผ่านที่ปลอดภัย', icon: <KeyRound className="w-8 h-8 text-green-500" />, href: '/tools/password' },
