@@ -3,8 +3,8 @@ export interface FinanceToolDef {
   name: string;
   desc: string;
   icon: string;
-  inputs: { name: string; label: string; type: 'number' | 'text'; placeholder: string; default?: number }[];
-  action: (inputs: Record<string, number>) => { result: string; details?: string[] };
+  inputs: { name: string; label: string; type: 'number' | 'text'; placeholder?: string; default?: number }[];
+  action: (inputs: Record<string, any>) => { result: string; details?: string[] };
 }
 
 export const financeTools: FinanceToolDef[] = [
