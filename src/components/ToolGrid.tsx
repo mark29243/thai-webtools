@@ -119,6 +119,15 @@ const allCategories = [
       { id: 'conv-area', name: 'แปลงหน่วยพื้นที่', desc: 'ไร่ ตารางวา ตารางเมตร', icon: <Calculator className="w-8 h-8 text-yellow-500" />, href: '/converters/area' },
       { id: 'conv-data', name: 'แปลงหน่วยข้อมูล', desc: 'Byte, KB, MB, GB, TB', icon: <Calculator className="w-8 h-8 text-purple-500" />, href: '/converters/data' },
       { id: 'conv-time', name: 'แปลงหน่วยเวลา', desc: 'วินาที นาที ชั่วโมง วัน ปี', icon: <Calculator className="w-8 h-8 text-red-500" />, href: '/converters/time' },
+      { id: 'conv-speed', name: 'แปลงหน่วยความเร็ว', desc: 'กม/ชม, ไมล์/ชม, มัค', icon: <Calculator className="w-8 h-8 text-blue-500" />, href: '/converters/speed' },
+      { id: 'conv-volume', name: 'แปลงหน่วยปริมาตร', desc: 'ลิตร, แกลลอน, ถ้วย', icon: <Droplet className="w-8 h-8 text-cyan-500" />, href: '/converters/volume' },
+      { id: 'conv-pressure', name: 'แปลงหน่วยความดัน', desc: 'Pascal, Bar, PSI', icon: <Calculator className="w-8 h-8 text-orange-500" />, href: '/converters/pressure' },
+      { id: 'conv-energy', name: 'แปลงหน่วยพลังงาน', desc: 'Joule, Calorie, kWh', icon: <Calculator className="w-8 h-8 text-amber-500" />, href: '/converters/energy' },
+      { id: 'conv-power', name: 'แปลงหน่วยกำลัง', desc: 'Watt, Kilowatt, HP', icon: <Calculator className="w-8 h-8 text-rose-500" />, href: '/converters/power' },
+      { id: 'conv-force', name: 'แปลงหน่วยแรง', desc: 'Newton, Dyne, Pound-force', icon: <Calculator className="w-8 h-8 text-emerald-500" />, href: '/converters/force' },
+      { id: 'conv-angle', name: 'แปลงหน่วยมุม', desc: 'องศา, เรเดียน', icon: <Calculator className="w-8 h-8 text-indigo-500" />, href: '/converters/angle' },
+      { id: 'conv-data-rate', name: 'แปลงอัตราส่งข้อมูล', desc: 'Mbps, Kbps, MB/s', icon: <Calculator className="w-8 h-8 text-violet-500" />, href: '/converters/data-rate' },
+      { id: 'conv-frequency', name: 'แปลงความถี่', desc: 'Hz, kHz, MHz', icon: <Calculator className="w-8 h-8 text-teal-500" />, href: '/converters/frequency' },
     ]
   }
 ]

@@ -80,7 +80,7 @@ export default function MathToolPage({ params }: { params: Promise<{ action: str
                 </label>
                 <input 
                   type={inp.type}
-                  value={inputs[inp.name] || ''}
+                  value={inputs[inp.name] ?? ''}
                   onChange={(e) => handleInputChange(inp.name, e.target.value, inp.type)}
                   className="w-full p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 text-lg transition-shadow"
                   placeholder={inp.placeholder}

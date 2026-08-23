@@ -214,14 +214,101 @@ export const textTools: TextToolDef[] = [
     }
   },
   {
-    id: 'count-consonants',
-    name: 'Count Consonants',
-    desc: 'นับพยัญชนะภาษาอังกฤษ',
-    icon: 'Sigma',
-    placeholder: 'พิมพ์ข้อความภาษาอังกฤษ...',
-    action: (t) => {
-      const match = t.match(/[bcdfghjklmnpqrstvwxyz]/gi);
-      return `พบพยัญชนะทั้งหมด: ${match ? match.length : 0} ตัว\nได้แก่: ${(match || []).join(', ')}`;
-    }
+    id: 'camel-case',
+    name: 'Camel Case',
+    desc: 'แปลงข้อความเป็น camelCase (เช่น helloWorld)',
+    icon: 'CaseSensitive',
+    placeholder: 'พิมพ์ข้อความ (เช่น Hello World)',
+    action: (t) => t.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => {
+      return index === 0 ? word.toLowerCase() : word.toUpperCase();
+    }).replace(/\s+/g, '')
+  },
+  {
+    id: 'snake-case',
+    name: 'Snake Case',
+    desc: 'แปลงข้อความเป็น snake_case (เช่น hello_world)',
+    icon: 'CaseSensitive',
+    placeholder: 'พิมพ์ข้อความ (เช่น Hello World)',
+    action: (t) => t.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)?.map(x => x.toLowerCase()).join('_') || t
+  },
+  {
+    id: 'kebab-case',
+    name: 'Kebab Case',
+    desc: 'แปลงข้อความเป็น kebab-case (เช่น hello-world)',
+    icon: 'CaseSensitive',
+    placeholder: 'พิมพ์ข้อความ (เช่น Hello World)',
+    action: (t) => t.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)?.map(x => x.toLowerCase()).join('-') || t
+  },
+  {
+    id: 'pascal-case',
+    name: 'Pascal Case',
+    desc: 'แปลงข้อความเป็น PascalCase (เช่น HelloWorld)',
+    icon: 'CaseSensitive',
+    placeholder: 'พิมพ์ข้อความ (เช่น Hello World)',
+    action: (t) => t.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)?.map(x => x.charAt(0).toUpperCase() + x.slice(1).toLowerCase()).join('') || t
+  },
+  {
+    id: 'alternating-case',
+    name: 'Alternating Case',
+    desc: 'สลับตัวพิมพ์เล็ก/ใหญ่ (เช่น hElLo wOrLd)',
+    icon: 'WholeWord',
+    placeholder: 'พิมพ์ข้อความ...',
+    action: (t) => t.split('').map((c, i) => i % 2 === 0 ? c.toLowerCase() : c.toUpperCase()).join('')
+  },
+  {
+    id: 'remove-line-breaks',
+    name: 'Remove Line Breaks',
+    desc: 'ลบการขึ้นบรรทัดใหม่ทั้งหมด ทำให้ข้อความต่อกันเป็นบรรทัดเดียว',
+    icon: 'WrapText',
+    placeholder: 'วางข้อความหลายบรรทัด...',
+    action: (t) => t.replace(/(\r\n|\n|\r)/gm, ' ')
+  },
+  {
+    id: 'remove-extra-spaces',
+    name: 'Remove Extra Spaces',
+    desc: 'ลบช่องว่างส่วนเกินที่ติดกันหลายตัวให้เหลือตัวเดียว',
+    icon: 'Space',
+    placeholder: 'วางข้อความที่มีช่องว่างเยอะๆ...',
+    action: (t) => t.replace(/\s+/g, ' ').trim()
+  },
+  {
+    id: 'extract-numbers',
+    name: 'Extract Numbers',
+    desc: 'ดึงเฉพาะตัวเลขที่อยู่ในข้อความออกมาทั้งหมด',
+    icon: 'Binary',
+    placeholder: 'วางข้อความที่มีตัวเลขปะปน...',
+    action: (t) => (t.match(/\d+/g) || []).join('\n')
+  },
+  {
+    id: 'extract-letters',
+    name: 'Extract Letters',
+    desc: 'ดึงเฉพาะตัวอักษร (ลบตัวเลขและสัญลักษณ์)',
+    icon: 'Type',
+    placeholder: 'วางข้อความ...',
+    action: (t) => t.replace(/[^a-zA-Z\u0E00-\u0E7F]/g, '')
+  },
+  {
+    id: 'reverse-string',
+    name: 'Reverse String',
+    desc: 'กลับด้านข้อความจากหลังมาหน้า ทุกตัวอักษร',
+    icon: 'ArrowLeftRight',
+    placeholder: 'พิมพ์ข้อความ...',
+    action: (t) => t.split('').reverse().join('')
+  },
+  {
+    id: 'html-encode',
+    name: 'HTML Encode',
+    desc: 'แปลงสัญลักษณ์พิเศษเป็น HTML Entities (&lt; &gt;)',
+    icon: 'Code2',
+    placeholder: 'วางโค้ด HTML...',
+    action: (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')
+  },
+  {
+    id: 'html-decode',
+    name: 'HTML Decode',
+    desc: 'แปลง HTML Entities กลับเป็นสัญลักษณ์ปกติ',
+    icon: 'FileCode',
+    placeholder: 'วางโค้ดแบบ HTML Entity...',
+    action: (t) => t.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
   }
 ];

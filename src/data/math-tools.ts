@@ -3,7 +3,7 @@ export interface MathToolDef {
   name: string;
   desc: string;
   icon: string;
-  inputs: { name: string; label: string; type: 'number' | 'date'; placeholder?: string; default?: string | number }[];
+  inputs: { name: string; label: string; type: 'number' | 'date' | 'text'; placeholder?: string; default?: string | number }[];
   action: (inputs: Record<string, any>) => { result: string; details?: string[] };
 }
 
@@ -239,6 +239,72 @@ export const mathTools: MathToolDef[] = [
         details: [
           `รากที่สาม (Cube Root): ${cbrt.toLocaleString(undefined, { maximumFractionDigits: 6 })}`
         ]
+      };
+    }
+  },
+  {
+    id: 'average-calculator',
+    name: 'Average Calculator (Mean)',
+    desc: 'คำนวณค่าเฉลี่ย (Mean) จากชุดตัวเลข',
+    icon: 'Sigma',
+    inputs: [
+      { name: 'numbers', label: 'ตัวเลข (คั่นด้วยลูกน้ำ)', type: 'text', placeholder: 'เช่น 10, 20, 30' }
+    ],
+    action: (inputs) => {
+      const str = String(inputs.numbers || '');
+      const arr = str.split(',').map(s => Number(s.trim())).filter(n => !isNaN(n));
+      if (arr.length === 0) return { result: 'กรุณาระบุตัวเลขที่ถูกต้อง' };
+      
+      const sum = arr.reduce((a, b) => a + b, 0);
+      const mean = sum / arr.length;
+      return {
+        result: `ค่าเฉลี่ย (Mean): ${mean.toLocaleString(undefined, { maximumFractionDigits: 4 })}`,
+        details: [
+          `ผลรวม: ${sum.toLocaleString()}`,
+          `จำนวนข้อมูลทั้งหมด: ${arr.length} ตัว`
+        ]
+      };
+    }
+  },
+  {
+    id: 'logarithm',
+    name: 'Logarithm Calculator',
+    desc: 'คำนวณ Logarithm (ฐาน 10 และ ฐาน e)',
+    icon: 'FunctionSquare',
+    inputs: [
+      { name: 'num', label: 'ตัวเลข (x)', type: 'number', default: 100 }
+    ],
+    action: (inputs) => {
+      const n = Number(inputs.num) || 0;
+      if (n <= 0) return { result: 'ตัวเลขต้องมากกว่า 0' };
+      
+      const log10 = Math.log10(n);
+      const ln = Math.log(n);
+      return {
+        result: `Log10(${n}) = ${log10.toLocaleString(undefined, { maximumFractionDigits: 6 })}`,
+        details: [
+          `ln(${n}) = ${ln.toLocaleString(undefined, { maximumFractionDigits: 6 })}`
+        ]
+      };
+    }
+  },
+  {
+    id: 'random-fraction',
+    name: 'Random Fraction Generator',
+    desc: 'สุ่มตัวเลขทศนิยมระหว่าง 0 ถึง 1',
+    icon: 'Dices',
+    inputs: [
+      { name: 'count', label: 'จำนวนที่ต้องการสุ่ม', type: 'number', default: 5 }
+    ],
+    action: (inputs) => {
+      const n = Math.min(Math.max(Number(inputs.count) || 1, 1), 100);
+      const res = [];
+      for (let i = 0; i < n; i++) {
+        res.push(Math.random().toFixed(6));
+      }
+      return {
+        result: `สุ่ม ${n} ตัวเลขสำเร็จ`,
+        details: res
       };
     }
   }
