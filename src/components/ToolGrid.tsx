@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { QrCode, KeyRound, WholeWord, FileJson, Palette, Hash, Link as LinkIcon, Calculator, FileText, Fingerprint, Dices, Binary, Search, Key, Image as ImageIcon, FilePlus, Droplet, Info, RefreshCw } from 'lucide-react'
+import { QrCode, KeyRound, WholeWord, FileJson, Palette, Hash, Link as LinkIcon, Calculator, FileText, Fingerprint, Dices, Binary, Search, Key, Image as ImageIcon, FilePlus, Droplet, Info, RefreshCw, Activity, Type } from 'lucide-react'
 import * as LucideIcons from 'lucide-react'
 import { textTools } from '@/data/text-tools'
 import { financeTools } from '@/data/finance-tools'
@@ -128,6 +128,24 @@ const allCategories = [
       { id: 'conv-angle', name: 'แปลงหน่วยมุม', desc: 'องศา, เรเดียน', icon: <Calculator className="w-8 h-8 text-indigo-500" />, href: '/converters/angle' },
       { id: 'conv-data-rate', name: 'แปลงอัตราส่งข้อมูล', desc: 'Mbps, Kbps, MB/s', icon: <Calculator className="w-8 h-8 text-violet-500" />, href: '/converters/data-rate' },
       { id: 'conv-frequency', name: 'แปลงความถี่', desc: 'Hz, kHz, MHz', icon: <Calculator className="w-8 h-8 text-teal-500" />, href: '/converters/frequency' },
+    ]
+  },
+  {
+    name: 'Social & Fun Tools',
+    tools: [
+      { id: 'random-picker', name: 'Random Name Picker', desc: 'วงล้อสุ่มรายชื่อจับฉลาก', icon: <Dices className="w-8 h-8 text-pink-500" />, href: '/tools/random-picker' },
+      { id: 'youtube-thumbnail', name: 'YouTube Thumbnail', desc: 'ดาวน์โหลดรูปหน้าปกคลิป', icon: <ImageIcon className="w-8 h-8 text-red-500" />, href: '/tools/youtube-thumbnail' },
+      { id: 'tweet-generator', name: 'Tweet Generator', desc: 'จำลองทวีตตลกๆ', icon: <WholeWord className="w-8 h-8 text-[#1d9bf0]" />, href: '/tools/tweet-generator' },
+      { id: 'social-fonts', name: 'Social Fonts', desc: 'สร้างฟอนต์พิเศษสำหรับไอจี', icon: <Type className="w-8 h-8 text-purple-500" />, href: '/tools/social-fonts' },
+      { id: 'ascii-art', name: 'ASCII Art', desc: 'แปลงข้อความเป็นอาร์ตตัวอักษร', icon: <Hash className="w-8 h-8 text-green-500" />, href: '/tools/ascii-art' },
+    ]
+  },
+  {
+    name: 'Extra Utilities',
+    tools: [
+      { id: 'barcode', name: 'Barcode Generator', desc: 'สร้างบาร์โค้ดสินค้าสากล', icon: <Hash className="w-8 h-8 text-gray-700 dark:text-gray-300" />, href: '/tools/barcode' },
+      { id: 'timezone', name: 'Time Zone Converter', desc: 'ดูและเทียบเวลาทั่วโลก', icon: <Calculator className="w-8 h-8 text-blue-500" />, href: '/tools/timezone' },
+      { id: 'speed-test', name: 'Internet Speed Test', desc: 'ทดสอบความเร็วอินเทอร์เน็ต', icon: <Activity className="w-8 h-8 text-green-500" />, href: '/tools/speed-test' },
     ]
   }
 ]
