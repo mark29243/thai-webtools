@@ -123,5 +123,123 @@ export const mathTools: MathToolDef[] = [
         ]
       };
     }
+  },
+  {
+    id: 'gcd-lcm',
+    name: 'GCD & LCM (ห.ร.ม. & ค.ร.น.)',
+    desc: 'คำนวณหาร่วมมาก (ห.ร.ม.) และคูณร่วมน้อย (ค.ร.น.)',
+    icon: 'Divide',
+    inputs: [
+      { name: 'num1', label: 'ตัวเลขที่ 1', type: 'number', default: 12 },
+      { name: 'num2', label: 'ตัวเลขที่ 2', type: 'number', default: 18 }
+    ],
+    action: (inputs) => {
+      let a = Math.abs(Number(inputs.num1) || 0);
+      let b = Math.abs(Number(inputs.num2) || 0);
+      if (a === 0 || b === 0) return { result: 'กรุณาระบุตัวเลขที่ไม่ใช่ 0' };
+
+      const gcd = (x: number, y: number): number => y === 0 ? x : gcd(y, x % y);
+      const resGcd = gcd(a, b);
+      const resLcm = (a * b) / resGcd;
+
+      return {
+        result: `ห.ร.ม. คือ ${resGcd}`,
+        details: [
+          `ค.ร.น. คือ ${resLcm}`
+        ]
+      };
+    }
+  },
+  {
+    id: 'prime-checker',
+    name: 'Prime Number Checker',
+    desc: 'ตรวจสอบว่าตัวเลขที่ระบุเป็นจำนวนเฉพาะ (Prime Number) หรือไม่',
+    icon: 'CheckCircle2',
+    inputs: [
+      { name: 'num', label: 'ตัวเลข', type: 'number', default: 29 }
+    ],
+    action: (inputs) => {
+      const n = Math.abs(Number(inputs.num) || 0);
+      if (n < 2) return { result: `${n} ไม่ใช่จำนวนเฉพาะ` };
+      
+      let isPrime = true;
+      for (let i = 2; i <= Math.sqrt(n); i++) {
+        if (n % i === 0) {
+          isPrime = false;
+          break;
+        }
+      }
+
+      return {
+        result: isPrime ? `${n} เป็นจำนวนเฉพาะ (Prime Number)` : `${n} ไม่ใช่จำนวนเฉพาะ`,
+        details: isPrime ? [] : ['เพราะสามารถหารด้วยตัวเลขอื่นลงตัวได้']
+      };
+    }
+  },
+  {
+    id: 'factorial',
+    name: 'Factorial Calculator (n!)',
+    desc: 'คำนวณแฟกทอเรียลของตัวเลข',
+    icon: 'Activity',
+    inputs: [
+      { name: 'num', label: 'ตัวเลข (n)', type: 'number', default: 5 }
+    ],
+    action: (inputs) => {
+      const n = Math.floor(Math.abs(Number(inputs.num) || 0));
+      if (n > 170) return { result: 'ตัวเลขมากเกินไป (เกินขีดจำกัด)' };
+      
+      let fact = 1;
+      for (let i = 2; i <= n; i++) {
+        fact *= i;
+      }
+
+      return {
+        result: `${n}! = ${fact.toLocaleString()}`
+      };
+    }
+  },
+  {
+    id: 'exponent',
+    name: 'Exponent Calculator (x^y)',
+    desc: 'คำนวณเลขยกกำลัง (Base ^ Exponent)',
+    icon: 'Superscript',
+    inputs: [
+      { name: 'base', label: 'ฐาน (Base)', type: 'number', default: 2 },
+      { name: 'power', label: 'เลขชี้กำลัง (Exponent)', type: 'number', default: 8 }
+    ],
+    action: (inputs) => {
+      const b = Number(inputs.base) || 0;
+      const p = Number(inputs.power) || 0;
+      
+      const res = Math.pow(b, p);
+
+      return {
+        result: `${b}^${p} = ${res.toLocaleString()}`
+      };
+    }
+  },
+  {
+    id: 'root-calculator',
+    name: 'Root Calculator (Square / Cube)',
+    desc: 'คำนวณรากที่สอง (Square Root) และรากที่สาม (Cube Root)',
+    icon: 'Radical',
+    inputs: [
+      { name: 'num', label: 'ตัวเลข', type: 'number', default: 144 }
+    ],
+    action: (inputs) => {
+      const n = Number(inputs.num) || 0;
+      
+      if (n < 0) return { result: 'ตัวเลขติดลบไม่มี Square Root ที่เป็นจำนวนจริง' };
+
+      const sqrt = Math.sqrt(n);
+      const cbrt = Math.cbrt(n);
+
+      return {
+        result: `รากที่สอง (Square Root): ${sqrt.toLocaleString(undefined, { maximumFractionDigits: 6 })}`,
+        details: [
+          `รากที่สาม (Cube Root): ${cbrt.toLocaleString(undefined, { maximumFractionDigits: 6 })}`
+        ]
+      };
+    }
   }
 ];
