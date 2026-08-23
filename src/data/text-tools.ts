@@ -98,5 +98,130 @@ export const textTools: TextToolDef[] = [
       };
       return t.toUpperCase().split('').map(c => morseDict[c] || c).join(' ');
     }
+  },
+  {
+    id: 'text-to-hex',
+    name: 'Text to Hex',
+    desc: 'แปลงข้อความเป็นรหัสฐาน 16 (Hexadecimal)',
+    icon: 'Binary',
+    placeholder: 'พิมพ์ข้อความ...',
+    action: (t) => t.split('').map(c => c.charCodeAt(0).toString(16)).join(' ')
+  },
+  {
+    id: 'hex-to-text',
+    name: 'Hex to Text',
+    desc: 'แปลงรหัสฐาน 16 (Hexadecimal) กลับเป็นข้อความ',
+    icon: 'FileText',
+    placeholder: 'พิมพ์รหัส Hex (เช่น 68 65 6c 6c 6f)',
+    action: (t) => t.split(' ').map(h => String.fromCharCode(parseInt(h, 16))).join('')
+  },
+  {
+    id: 'extract-emails',
+    name: 'Extract Emails',
+    desc: 'ดึงอีเมลทั้งหมดที่ซ่อนอยู่ในข้อความยาวๆ ออกมา',
+    icon: 'Mail',
+    placeholder: 'วางเนื้อหาที่มีอีเมลปะปนอยู่...',
+    action: (t) => (t.match(/[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+/gi) || []).join('\n')
+  },
+  {
+    id: 'extract-urls',
+    name: 'Extract URLs',
+    desc: 'ดึงลิงก์เว็บไซต์ (URL) ทั้งหมดออกจากข้อความ',
+    icon: 'Link',
+    placeholder: 'วางเนื้อหาที่มีลิงก์ปะปนอยู่...',
+    action: (t) => (t.match(/https?:\/\/[^\s]+/gi) || []).join('\n')
+  },
+  {
+    id: 'sort-lines-alpha',
+    name: 'Sort Lines A-Z',
+    desc: 'เรียงลำดับบรรทัดตามตัวอักษร A-Z (หรือ ก-ฮ)',
+    icon: 'ArrowDownAZ',
+    placeholder: 'วางข้อความหลายบรรทัด...',
+    action: (t) => t.split('\n').sort((a,b) => a.localeCompare(b)).join('\n')
+  },
+  {
+    id: 'sort-lines-reverse',
+    name: 'Sort Lines Z-A',
+    desc: 'เรียงลำดับบรรทัดย้อนกลับ Z-A (หรือ ฮ-ก)',
+    icon: 'ArrowUpZA',
+    placeholder: 'วางข้อความหลายบรรทัด...',
+    action: (t) => t.split('\n').sort((a,b) => b.localeCompare(a)).join('\n')
+  },
+  {
+    id: 'shuffle-lines',
+    name: 'Shuffle Lines',
+    desc: 'สลับบรรทัดแบบสุ่ม (Randomize Lines)',
+    icon: 'Shuffle',
+    placeholder: 'วางข้อความหลายบรรทัด...',
+    action: (t) => {
+      const arr = t.split('\n');
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr.join('\n');
+    }
+  },
+  {
+    id: 'reverse-words',
+    name: 'Reverse Words',
+    desc: 'สลับตำแหน่งคำในประโยคจากหลังมาหน้า',
+    icon: 'ArrowLeftRight',
+    placeholder: 'พิมพ์ข้อความ (เช่น hello world -> world hello)',
+    action: (t) => t.split(' ').reverse().join(' ')
+  },
+  {
+    id: 'remove-punctuation',
+    name: 'Remove Punctuation',
+    desc: 'ลบเครื่องหมายวรรคตอนและสัญลักษณ์พิเศษทั้งหมด',
+    icon: 'Eraser',
+    placeholder: 'พิมพ์ข้อความที่มีเครื่องหมาย !@#$%',
+    action: (t) => t.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '')
+  },
+  {
+    id: 'add-line-numbers',
+    name: 'Add Line Numbers',
+    desc: 'ใส่ตัวเลขกำกับหน้าบรรทัดทุกบรรทัด',
+    icon: 'ListOrdered',
+    placeholder: 'วางข้อความหลายบรรทัด...',
+    action: (t) => t.split('\n').map((line, i) => `${i + 1}. ${line}`).join('\n')
+  },
+  {
+    id: 'text-to-octal',
+    name: 'Text to Octal',
+    desc: 'แปลงข้อความเป็นรหัสฐาน 8 (Octal)',
+    icon: 'Binary',
+    placeholder: 'พิมพ์ข้อความ...',
+    action: (t) => t.split('').map(c => c.charCodeAt(0).toString(8)).join(' ')
+  },
+  {
+    id: 'octal-to-text',
+    name: 'Octal to Text',
+    desc: 'แปลงรหัสฐาน 8 (Octal) กลับเป็นข้อความ',
+    icon: 'FileText',
+    placeholder: 'พิมพ์รหัส Octal (เช่น 150 145 154)',
+    action: (t) => t.split(' ').map(o => String.fromCharCode(parseInt(o, 8))).join('')
+  },
+  {
+    id: 'count-vowels',
+    name: 'Count Vowels',
+    desc: 'นับสระภาษาอังกฤษ (A, E, I, O, U)',
+    icon: 'Sigma',
+    placeholder: 'พิมพ์ข้อความภาษาอังกฤษ...',
+    action: (t) => {
+      const match = t.match(/[aeiou]/gi);
+      return `พบสระทั้งหมด: ${match ? match.length : 0} ตัว\nได้แก่: ${(match || []).join(', ')}`;
+    }
+  },
+  {
+    id: 'count-consonants',
+    name: 'Count Consonants',
+    desc: 'นับพยัญชนะภาษาอังกฤษ',
+    icon: 'Sigma',
+    placeholder: 'พิมพ์ข้อความภาษาอังกฤษ...',
+    action: (t) => {
+      const match = t.match(/[bcdfghjklmnpqrstvwxyz]/gi);
+      return `พบพยัญชนะทั้งหมด: ${match ? match.length : 0} ตัว\nได้แก่: ${(match || []).join(', ')}`;
+    }
   }
 ];
