@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { QrCode, KeyRound, WholeWord, FileJson, Palette, Hash, Link as LinkIcon, Calculator, FileText, Fingerprint, Dices, Binary, Search, Key, Image as ImageIcon, FilePlus } from 'lucide-react'
+import { QrCode, KeyRound, WholeWord, FileJson, Palette, Hash, Link as LinkIcon, Calculator, FileText, Fingerprint, Dices, Binary, Search, Key, Image as ImageIcon, FilePlus, Droplet, Info } from 'lucide-react'
 
 const allCategories = [
   {
@@ -29,6 +29,8 @@ const allCategories = [
       { id: 'pdf-merge', name: 'Merge PDF', desc: 'รวมไฟล์ PDF เข้าด้วยกันในเครื่อง ปลอดภัย 100%', icon: <FilePlus className="w-8 h-8 text-blue-500" />, href: '/tools/pdf-merge' },
       { id: 'pdf-split', name: 'Split PDF', desc: 'แยกหน้า PDF ที่ต้องการออกมา', icon: <FileText className="w-8 h-8 text-blue-500" />, href: '/tools/pdf-split' },
       { id: 'image-to-pdf', name: 'Image to PDF', desc: 'แปลงรูปภาพ JPG, PNG เป็น PDF', icon: <ImageIcon className="w-8 h-8 text-blue-500" />, href: '/tools/image-to-pdf' },
+      { id: 'pdf-watermark', name: 'Add Watermark', desc: 'ใส่ข้อความลายน้ำลงในไฟล์ PDF', icon: <Droplet className="w-8 h-8 text-blue-500" />, href: '/tools/pdf-watermark' },
+      { id: 'pdf-metadata', name: 'Edit PDF Info', desc: 'ดูและแก้ไขข้อมูล Metadata ของ PDF', icon: <Info className="w-8 h-8 text-blue-500" />, href: '/tools/pdf-metadata' },
       { id: 'qrcode', name: 'QR Code Generator', desc: 'สร้างคิวอาร์โค้ดฟรีไม่มีหมดอายุ', icon: <QrCode className="w-8 h-8 text-blue-500" />, href: '/tools/qrcode' },
       { id: 'image-compressor', name: 'Image Compressor', desc: 'ย่อขนาดรูปภาพ JPG/PNG แบบออฟไลน์', icon: <ImageIcon className="w-8 h-8 text-emerald-500" />, href: '/tools/image-compressor' },
       { id: 'password', name: 'Password Generator', desc: 'สุ่มรหัสผ่านที่ปลอดภัย', icon: <KeyRound className="w-8 h-8 text-green-500" />, href: '/tools/password' },
