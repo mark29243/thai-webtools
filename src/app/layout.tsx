@@ -22,6 +22,8 @@ export const viewport = {
   themeColor: "#2563eb",
 };
 
+import { BottomNav } from '@/components/BottomNav'
+
 export default function RootLayout({
   children,
 }: {
@@ -32,10 +34,11 @@ export default function RootLayout({
       <body className={`${inter.className} min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 flex flex-col`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Header />
-          <main className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+          <main className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 pb-24 md:pb-8">
             {children}
           </main>
           <Footer />
+          <BottomNav />
         </ThemeProvider>
       </body>
     </html>
