@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { QrCode, KeyRound, WholeWord, FileJson, Palette, Hash, Link as LinkIcon, Calculator, FileText, Fingerprint, Dices, Binary, Search, Key, Image as ImageIcon, FilePlus, Droplet, Info, RefreshCw, Activity, Type } from 'lucide-react'
+import { QrCode, KeyRound, WholeWord, FileJson, Palette, Hash, Link as LinkIcon, Calculator, FileText, Fingerprint, Dices, Binary, Search, Key, Image as ImageIcon, FilePlus, Droplet, Info, RefreshCw, Activity, Type, Coins } from 'lucide-react'
 import * as LucideIcons from 'lucide-react'
 import { textTools } from '@/data/text-tools'
 import { financeTools } from '@/data/finance-tools'
@@ -134,6 +134,7 @@ const allCategories = [
   {
     name: 'Social & Fun Tools',
     tools: [
+      { id: 'lottery', name: 'ตรวจสลากกินแบ่งฯ', desc: 'ตรวจหวยงวดล่าสุด อัปเดตไวสุด เช็กง่ายได้เงินจริง', icon: <Coins className="w-8 h-8 text-blue-500" />, href: '/tools/lottery' },
       { id: 'random-picker', name: 'Random Name Picker', desc: 'วงล้อสุ่มรายชื่อจับฉลาก', icon: <Dices className="w-8 h-8 text-pink-500" />, href: '/tools/random-picker' },
       { id: 'youtube-thumbnail', name: 'YouTube Thumbnail', desc: 'ดาวน์โหลดรูปหน้าปกคลิป', icon: <ImageIcon className="w-8 h-8 text-red-500" />, href: '/tools/youtube-thumbnail' },
       { id: 'tweet-generator', name: 'Tweet Generator', desc: 'จำลองทวีตตลกๆ', icon: <WholeWord className="w-8 h-8 text-[#1d9bf0]" />, href: '/tools/tweet-generator' },
