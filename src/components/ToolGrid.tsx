@@ -68,11 +68,21 @@ export function ToolGrid() {
         </div>
         <input
           type="text"
-          className="block w-full pl-11 pr-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-full shadow-lg text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow text-base sm:text-lg"
+          className="block w-full pl-11 pr-12 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-full shadow-lg text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow text-base sm:text-lg"
           placeholder="ค้นหาเครื่องมือที่ต้องการ..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
+        {search && (
+          <button 
+            onClick={() => setSearch('')}
+            className="absolute inset-y-0 right-4 sm:right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 bg-gray-100 dark:bg-gray-800 rounded-full p-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        )}
       </div>
 
       {/* Grid */}
