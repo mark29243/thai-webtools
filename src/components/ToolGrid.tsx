@@ -58,6 +58,7 @@ const allCategories = [
       { id: 'pdf-page-numbers', name: 'Add Page Numbers', desc: 'รันหมายเลขหน้าให้กับไฟล์ PDF', icon: <Hash className="w-8 h-8 text-blue-500" />, href: '/tools/pdf-page-numbers' },
       { id: 'pdf-watermark', name: 'Add Watermark', desc: 'ใส่ข้อความลายน้ำลงในไฟล์ PDF', icon: <Droplet className="w-8 h-8 text-blue-500" />, href: '/tools/pdf-watermark' },
       { id: 'pdf-metadata', name: 'Edit PDF Info', desc: 'ดูและแก้ไขข้อมูล Metadata ของ PDF', icon: <Info className="w-8 h-8 text-blue-500" />, href: '/tools/pdf-metadata' },
+      { id: 'pdf-ocr', name: 'PDF to Text (OCR)', desc: 'สกัดข้อความจากไฟล์ภาพและ PDF', icon: <FileText className="w-8 h-8 text-blue-500" />, href: '/tools/pdf-ocr' },
     ]
   },
   {
