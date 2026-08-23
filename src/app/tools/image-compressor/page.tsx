@@ -136,7 +136,6 @@ export default function ImageCompressorPage() {
     
     images.forEach((img, idx) => {
       if (img.compressedUrl) {
-        // Extract base64 data
         const base64Data = img.compressedUrl.split(',')[1]
         const extension = 'jpg'
         const originalName = img.file.name.substring(0, img.file.name.lastIndexOf('.')) || img.file.name
@@ -153,6 +152,33 @@ export default function ImageCompressorPage() {
       console.error(err)
       toast.error('เกิดข้อผิดพลาดในการสร้างไฟล์ ZIP', { id: zipToast })
     }
+  }
+
+  const downloadAllImages = async () => {
+    if (images.length === 0) return
+    
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+    if (isMobile && images.length > 3) {
+      toast('เบราว์เซอร์อาจถามการอนุญาตให้ดาวน์โหลดหลายไฟล์', { icon: 'ℹ️' })
+    }
+    
+    let downloadedCount = 0
+    for (let i = 0; i < images.length; i++) {
+      const img = images[i]
+      if (img.compressedUrl) {
+        const link = document.createElement('a')
+        link.href = img.compressedUrl
+        link.download = `compressed_${img.file.name.replace(/\.[^/.]+$/, "")}.jpg`
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        downloadedCount++
+        
+        // Delay to prevent browser blocking multiple downloads
+        await new Promise(resolve => setTimeout(resolve, 400))
+      }
+    }
+    toast.success(`ดาวน์โหลดเสร็จสิ้น ${downloadedCount} รูป! (เช็กในแกลเลอรี่/โฟลเดอร์ดาวน์โหลด)`)
   }
 
   const totalOriginalSize = images.reduce((acc, curr) => acc + curr.originalSize, 0)
@@ -207,20 +233,29 @@ export default function ImageCompressorPage() {
             </div>
 
             {/* Summary */}
-            <div className="flex flex-col sm:flex-row items-center justify-between bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl border border-blue-100 dark:border-blue-900/30">
-              <div className="flex items-center gap-4 text-sm font-medium text-gray-700 dark:text-gray-300">
+            <div className="flex flex-col md:flex-row md:items-center justify-between bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl border border-blue-100 dark:border-blue-900/30 gap-4">
+              <div className="flex flex-wrap items-center gap-4 text-sm font-medium text-gray-700 dark:text-gray-300">
                 <span>ไฟล์ทั้งหมด: {images.length} รูป</span>
                 <span>รวมก่อนบีบ: {formatSize(totalOriginalSize)}</span>
                 <span className="text-green-600 dark:text-green-400">รวมหลังบีบ: {formatSize(totalCompressedSize)}</span>
               </div>
               
-              <button 
-                onClick={downloadAllAsZip}
-                disabled={isCompressing || images.length === 0}
-                className="mt-4 sm:mt-0 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium rounded-xl transition-colors flex items-center gap-2 shadow-sm"
-              >
-                <FileArchive className="w-5 h-5" /> โหลดทั้งหมด (ZIP)
-              </button>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <button 
+                  onClick={downloadAllImages}
+                  disabled={isCompressing || images.length === 0}
+                  className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium rounded-xl transition-colors flex items-center justify-center gap-2 shadow-sm"
+                >
+                  <ImageIcon className="w-5 h-5" /> โหลดรูปลงเครื่องทีละภาพ
+                </button>
+                <button 
+                  onClick={downloadAllAsZip}
+                  disabled={isCompressing || images.length === 0}
+                  className="px-4 py-2.5 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 disabled:opacity-50 text-gray-800 dark:text-gray-200 font-medium rounded-xl transition-colors flex items-center justify-center gap-2"
+                >
+                  <FileArchive className="w-4 h-4" /> แบบ ZIP
+                </button>
+              </div>
             </div>
 
             {/* Grid List */}

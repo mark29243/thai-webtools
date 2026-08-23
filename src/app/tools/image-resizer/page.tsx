@@ -143,6 +143,34 @@ export default function ImageResizerPage() {
     a.click()
   }
 
+  const downloadAllImages = async () => {
+    if (images.length === 0) return
+    
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+    if (isMobile && images.length > 3) {
+      toast('เบราว์เซอร์อาจถามการอนุญาตให้ดาวน์โหลดหลายไฟล์', { icon: 'ℹ️' })
+    }
+    
+    let downloadedCount = 0
+    for (let i = 0; i < images.length; i++) {
+      const img = images[i]
+      const dataUrl = await processImage(img)
+      const link = document.createElement('a')
+      link.href = dataUrl
+      const originalName = img.file.name.substring(0, img.file.name.lastIndexOf('.')) || img.file.name
+      const extension = img.file.name.split('.').pop() || 'jpg'
+      link.download = `${originalName}_${img.targetWidth}x${img.targetHeight}.${extension}`
+      
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      downloadedCount++
+      
+      await new Promise(resolve => setTimeout(resolve, 400))
+    }
+    toast.success(`ดาวน์โหลดเสร็จสิ้น ${downloadedCount} รูป! (เช็กในแกลเลอรี่/โฟลเดอร์ดาวน์โหลด)`)
+  }
+
   const downloadAllAsZip = async () => {
     if (images.length === 0) return
     
@@ -238,19 +266,27 @@ export default function ImageResizerPage() {
                 </div>
               </div>
               
-              <div className="flex flex-col justify-end items-end gap-3 md:border-l md:dark:border-gray-700 md:pl-6">
+              <div className="flex flex-col justify-end gap-2 md:border-l md:dark:border-gray-700 md:pl-6">
                 <button 
-                  onClick={downloadAllAsZip}
-                  className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-colors flex items-center justify-center gap-2 shadow-sm"
+                  onClick={downloadAllImages}
+                  className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-colors flex items-center justify-center gap-2 shadow-sm"
                 >
-                  <FileArchive className="w-5 h-5" /> ดาวน์โหลดทั้งหมด (ZIP)
+                  <ImageIcon className="w-5 h-5" /> โหลดรูปลงเครื่องทีละภาพ
                 </button>
-                <button 
-                  onClick={() => setImages([])}
-                  className="text-sm text-red-500 hover:text-red-700 font-medium"
-                >
-                  ล้างไฟล์ทั้งหมด
-                </button>
+                <div className="flex gap-2">
+                  <button 
+                    onClick={downloadAllAsZip}
+                    className="flex-1 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-medium rounded-xl transition-colors flex items-center justify-center gap-2"
+                  >
+                    <FileArchive className="w-4 h-4" /> แบบ ZIP
+                  </button>
+                  <button 
+                    onClick={() => setImages([])}
+                    className="flex-1 py-2 border border-red-200 dark:border-red-900/30 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 font-medium rounded-xl transition-colors"
+                  >
+                    ล้างทั้งหมด
+                  </button>
+                </div>
               </div>
             </div>
 
