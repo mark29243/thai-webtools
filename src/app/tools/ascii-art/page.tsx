@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { AdSlot } from '@/components/AdSlot'
 import figlet from 'figlet'
+// @ts-ignore
 import standard from 'figlet/importable-fonts/Standard'
 
 figlet.parseFont('Standard', standard)
