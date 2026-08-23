@@ -3,13 +3,24 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { ThemeProvider } from '@/components/ThemeProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Thai WebTools - เครื่องมือออนไลน์ฟรี',
-  description: 'รวมเครื่องมือออนไลน์ฟรี เช่น สร้าง QR Code, สุ่มรหัสผ่าน, นับคำ, จัดรูปแบบ JSON',
-}
+  title: "Thai WebTools - เครื่องมือออนไลน์ฟรี 100%",
+  description: "ศูนย์รวมเครื่องมือออนไลน์สำหรับนักพัฒนา นักออกแบบ และผู้ใช้งานทั่วไป โหลดเร็ว ไม่ต้องติดตั้ง",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Thai WebTools",
+  },
+};
+
+export const viewport = {
+  themeColor: "#2563eb",
+};
 
 export default function RootLayout({
   children,
@@ -17,13 +28,15 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="th">
-      <body className={`${inter.className} min-h-screen flex flex-col bg-slate-50 text-slate-900`}>
-        <Header />
-        <main className="flex-1 container mx-auto px-4 py-8">
-          {children}
-        </main>
-        <Footer />
+    <html lang="th" suppressHydrationWarning>
+      <body className={`${inter.className} min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 flex flex-col`}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Header />
+          <main className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+            {children}
+          </main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   )
