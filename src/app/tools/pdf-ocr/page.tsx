@@ -65,6 +65,7 @@ export default function PdfOcrPage() {
         canvas.width = viewport.width
         canvas.height = viewport.height
         
+        // @ts-ignore
         await page.render({
           canvasContext: context,
           viewport: viewport
