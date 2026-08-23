@@ -10,10 +10,9 @@ export function Header() {
           <span>Thai WebTools</span>
         </Link>
         <nav className="hidden md:flex gap-6 text-sm font-medium text-gray-600">
-          <Link href="/" className="hover:text-blue-600">Home</Link>
-          <Link href="/tools/qrcode" className="hover:text-blue-600">QR Code</Link>
-          <Link href="/tools/password" className="hover:text-blue-600">Password</Link>
-          <Link href="/tools/word-counter" className="hover:text-blue-600">Word Count</Link>
+          <Link href="/" className="hover:text-blue-600 transition-colors">หน้าแรก</Link>
+          <Link href="/about" className="hover:text-blue-600 transition-colors">เกี่ยวกับเรา</Link>
+          <Link href="/contact" className="hover:text-blue-600 transition-colors">ติดต่อเรา</Link>
         </nav>
       </div>
     </header>
