@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { AdSlot } from '@/components/AdSlot'
-import { Search, Trophy, Calendar, Loader2, AlertCircle, Coins, PartyPopper } from 'lucide-react'
+import { Search, Trophy, Calendar, Loader2, AlertCircle, Coins, PartyPopper, Plus, Trash2 } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 interface Prize {
@@ -28,10 +28,74 @@ interface WinResult {
   matchedNumber: string
 }
 
+function TicketBlock({ value, onChange, onEnter }: { value: string, onChange: (v: string) => void, onEnter?: () => void }) {
+  const inputs = useRef<(HTMLInputElement | null)[]>([])
+
+  const handleChange = (i: number, val: string) => {
+    const digits = val.replace(/\D/g, '')
+    if (digits.length > 1) {
+      onChange(digits.slice(0, 6))
+      inputs.current[Math.min(digits.length, 5)]?.focus()
+      return
+    }
+
+    const newArr = (value || '').split('')
+    newArr[i] = digits.slice(-1)
+    while(newArr.length < 6) newArr.push('')
+    const newVal = newArr.join('').slice(0, 6)
+    onChange(newVal)
+
+    if (digits && i < 5) {
+      inputs.current[i + 1]?.focus()
+    }
+  }
+
+  const handleKeyDown = (i: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Backspace' && !value[i] && i > 0) {
+      inputs.current[i - 1]?.focus()
+    } else if (e.key === 'Enter') {
+      onEnter?.()
+    } else if (e.key === 'ArrowLeft' && i > 0) {
+      inputs.current[i - 1]?.focus()
+    } else if (e.key === 'ArrowRight' && i < 5) {
+      inputs.current[i + 1]?.focus()
+    }
+  }
+
+  const handlePaste = (e: React.ClipboardEvent) => {
+    const pasted = e.clipboardData.getData('text')
+    const digits = pasted.replace(/\D/g, '')
+    if (digits.length > 0) {
+      e.preventDefault()
+      onChange(digits.slice(0, 6))
+      inputs.current[Math.min(digits.length, 5)]?.focus()
+    }
+  }
+
+  return (
+    <div className="flex justify-center gap-1 sm:gap-3 w-full">
+      {[0, 1, 2, 3, 4, 5].map(i => (
+        <input
+          key={i}
+          ref={el => { inputs.current[i] = el }}
+          type="text"
+          inputMode="numeric"
+          value={value[i] || ''}
+          onChange={e => handleChange(i, e.target.value)}
+          onKeyDown={e => handleKeyDown(i, e)}
+          onPaste={handlePaste}
+          className="w-10 h-14 sm:w-14 sm:h-16 text-center text-2xl sm:text-3xl font-bold rounded-xl border-2 border-blue-200 dark:border-blue-900/50 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 transition-all outline-none shadow-sm"
+          placeholder="-"
+        />
+      ))}
+    </div>
+  )
+}
+
 export default function LotteryPage() {
   const [data, setData] = useState<LotteryData | null>(null)
   const [loading, setLoading] = useState(true)
-  const [inputNumber, setInputNumber] = useState('')
+  const [tickets, setTickets] = useState<string[]>([''])
   const [results, setResults] = useState<WinResult[] | null>(null)
   const [checkedTickets, setCheckedTickets] = useState<string[]>([])
 
@@ -52,8 +116,7 @@ export default function LotteryPage() {
   const handleCheck = (e?: React.FormEvent) => {
     if (e) e.preventDefault()
     
-    const rawTokens = inputNumber.split(/[\s,]+/).filter(Boolean)
-    const validTickets = Array.from(new Set(rawTokens.filter(t => /^\d{6}$/.test(t)))) // เอาเฉพาะตัวเลข 6 หลัก (ไม่ซ้ำ)
+    const validTickets = Array.from(new Set(tickets.filter(t => /^\d{6}$/.test(t))))
     
     if (validTickets.length === 0) {
       toast.error('กรุณากรอกตัวเลข 6 หลักให้ถูกต้องอย่างน้อย 1 ใบ')
@@ -91,6 +154,16 @@ export default function LotteryPage() {
     }
   }
 
+  const handlePasteGlobal = (e: React.ClipboardEvent) => {
+    const pasted = e.clipboardData.getData('text')
+    const matches = pasted.match(/\b\d{6}\b/g)
+    if (matches && matches.length > 0) {
+      e.preventDefault()
+      setTickets(matches)
+      toast.success(`วางเลขสลากทั้งหมด ${matches.length} ใบเรียบร้อย`)
+    }
+  }
+
   const getPrizeByPrefix = (prefix: string) => {
     return data?.response.prizes.find(p => p.id === prefix)?.number || []
   }
@@ -124,18 +197,54 @@ export default function LotteryPage() {
             </div>
 
             {/* Check Form */}
-            <div className="max-w-xl mx-auto">
-              <form onSubmit={handleCheck} className="space-y-4">
-                <textarea
-                  value={inputNumber}
-                  onChange={(e) => setInputNumber(e.target.value.replace(/[^\d\s,]/g, ''))}
-                  placeholder="กรอกเลขสลาก 6 หลัก&#10;เว้นวรรคหรือขึ้นบรรทัดใหม่เพื่อตรวจทีละหลายใบ..."
-                  rows={4}
-                  className="w-full text-center text-2xl font-bold tracking-widest p-6 bg-gray-50 dark:bg-gray-800 border-2 border-blue-200 dark:border-blue-900/50 focus:border-blue-500 rounded-2xl outline-none transition-colors text-gray-800 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500 resize-y"
-                />
-                <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div className="max-w-2xl mx-auto">
+              <form onSubmit={handleCheck} className="space-y-6" onPaste={handlePasteGlobal}>
+                <div className="text-center text-sm text-gray-500 mb-2">
+                  (สามารถก๊อปปี้ตัวเลขสลากหลายใบมาวางได้เลย ระบบจะแยกให้ตามช่องอัตโนมัติ)
+                </div>
+                
+                <div className="space-y-4">
+                  {tickets.map((t, idx) => (
+                    <div key={idx} className="flex flex-col sm:flex-row items-center justify-center gap-4 relative animate-in fade-in duration-200">
+                      <div className="absolute -left-4 md:-left-12 text-gray-400 font-medium text-sm hidden sm:block whitespace-nowrap">
+                        ใบที่ {idx + 1}
+                      </div>
+                      <TicketBlock 
+                        value={t} 
+                        onChange={(v) => {
+                          const nt = [...tickets]
+                          nt[idx] = v
+                          setTickets(nt)
+                        }}
+                        onEnter={handleCheck}
+                      />
+                      {tickets.length > 1 && (
+                        <button 
+                          type="button" 
+                          onClick={() => setTickets(tickets.filter((_, i) => i !== idx))} 
+                          className="absolute -right-2 sm:-right-10 text-red-400 hover:text-red-600 p-2 hover:bg-red-50 rounded-full transition-colors"
+                          title="ลบสลากใบนี้"
+                        >
+                          <Trash2 className="w-5 h-5"/>
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex justify-center pt-2">
+                  <button 
+                    type="button" 
+                    onClick={() => setTickets([...tickets, ''])} 
+                    className="text-blue-600 font-bold flex items-center gap-1 hover:bg-blue-50 px-5 py-2.5 rounded-xl transition-colors border-2 border-transparent hover:border-blue-100"
+                  >
+                    <Plus className="w-5 h-5"/> เพิ่มสลาก
+                  </button>
+                </div>
+
+                <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-4 border-t dark:border-gray-800">
                   <div className="text-sm text-gray-500 dark:text-gray-400 font-medium">
-                    จำนวนที่พร้อมตรวจ: <span className="text-blue-600 dark:text-blue-400 font-bold text-lg">{inputNumber.split(/[\s,]+/).filter(t => /^\d{6}$/.test(t)).length}</span> ใบ
+                    จำนวนที่พร้อมตรวจ: <span className="text-blue-600 dark:text-blue-400 font-bold text-lg">{tickets.filter(t => /^\d{6}$/.test(t)).length}</span> ใบ
                   </div>
                   <button
                     type="submit"
