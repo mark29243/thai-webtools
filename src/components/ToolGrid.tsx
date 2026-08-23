@@ -7,6 +7,7 @@ import * as LucideIcons from 'lucide-react'
 import { textTools } from '@/data/text-tools'
 import { financeTools } from '@/data/finance-tools'
 import { devTools } from '@/data/dev-tools'
+import { mathTools } from '@/data/math-tools'
 
 const allCategories = [
   {
@@ -91,6 +92,21 @@ const allCategories = [
           desc: t.desc,
           icon: <IconComp className="w-8 h-8 text-green-500" />,
           href: `/finance/${t.id}`
+        }
+      })
+    ]
+  },
+  {
+    name: 'Math & Measurement Tools',
+    tools: [
+      ...mathTools.map(t => {
+        const IconComp = (LucideIcons as any)[t.icon] || LucideIcons.Calculator
+        return {
+          id: t.id,
+          name: t.name,
+          desc: t.desc,
+          icon: <IconComp className="w-8 h-8 text-blue-500" />,
+          href: `/math/${t.id}`
         }
       })
     ]
