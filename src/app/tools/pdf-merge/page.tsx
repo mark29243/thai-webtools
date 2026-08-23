@@ -91,7 +91,7 @@ export default function PdfMergePage() {
       }
 
       const mergedPdfFile = await mergedPdf.save()
-      const blob = new Blob([mergedPdfFile], { type: 'application/pdf' })
+      const blob = new Blob([mergedPdfFile as any], { type: 'application/pdf' })
       const url = URL.createObjectURL(blob)
       
       setResultUrl(url)
