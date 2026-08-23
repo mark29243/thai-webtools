@@ -62,14 +62,14 @@ export function ToolGrid() {
   return (
     <div className="space-y-8">
       {/* Search Bar */}
-      <div className="relative max-w-2xl mx-auto -mt-6 mb-12">
-        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+      <div className="relative max-w-2xl mx-auto -mt-6 mb-12 px-4 sm:px-0">
+        <div className="absolute inset-y-0 left-4 sm:left-0 pl-4 flex items-center pointer-events-none">
           <Search className="h-5 w-5 text-gray-400" />
         </div>
         <input
           type="text"
-          className="block w-full pl-11 pr-4 py-4 bg-white border border-gray-200 rounded-full shadow-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow text-lg"
-          placeholder="ค้นหาเครื่องมือที่ต้องการ... (เช่น qr code, สุ่มรหัส)"
+          className="block w-full pl-11 pr-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-full shadow-lg text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow text-base sm:text-lg"
+          placeholder="ค้นหาเครื่องมือที่ต้องการ..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -80,22 +80,22 @@ export function ToolGrid() {
         {filteredCategories.length > 0 ? (
           filteredCategories.map((cat, idx) => (
             <section key={idx}>
-              <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">{cat.name}</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <h2 className="text-xl sm:text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100 border-b dark:border-gray-800 pb-2">{cat.name}</h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
                 {cat.tools.map((tool) => (
                   <Link 
                     key={tool.id} 
                     href={tool.href}
-                    className="bg-white p-6 rounded-xl shadow-sm border hover:shadow-md hover:border-blue-200 transition-all flex flex-col gap-4 group"
+                    className="bg-white dark:bg-gray-900 p-3 sm:p-5 rounded-2xl shadow-sm border dark:border-gray-800 hover:shadow-md hover:border-blue-300 dark:hover:border-blue-700 transition-all flex flex-col items-center text-center group"
                   >
-                    <div className="p-3 bg-gray-50 rounded-lg w-fit group-hover:bg-blue-50 transition-colors">
-                      <div className="group-hover:scale-110 transition-transform">
+                    <div className="p-3 sm:p-4 bg-gray-50 dark:bg-gray-800 rounded-xl mb-2 sm:mb-3 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/40 transition-colors">
+                      <div className="group-hover:scale-110 transition-transform [&>svg]:w-6 [&>svg]:h-6 sm:[&>svg]:w-8 sm:[&>svg]:h-8">
                         {tool.icon}
                       </div>
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-lg text-gray-900 group-hover:text-blue-600 transition-colors">{tool.name}</h3>
-                      <p className="text-sm text-gray-500 mt-1 leading-relaxed">{tool.desc}</p>
+                    <div className="w-full">
+                      <h3 className="font-semibold text-[13px] sm:text-base text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-tight line-clamp-2 px-1">{tool.name}</h3>
+                      <p className="hidden sm:block text-xs text-gray-500 dark:text-gray-400 mt-1.5 leading-relaxed line-clamp-2">{tool.desc}</p>
                     </div>
                   </Link>
                 ))}
