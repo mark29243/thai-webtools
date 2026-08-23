@@ -6,6 +6,7 @@ import { QrCode, KeyRound, WholeWord, FileJson, Palette, Hash, Link as LinkIcon,
 import * as LucideIcons from 'lucide-react'
 import { textTools } from '@/data/text-tools'
 import { financeTools } from '@/data/finance-tools'
+import { devTools } from '@/data/dev-tools'
 
 const allCategories = [
   {
@@ -17,6 +18,16 @@ const allCategories = [
       { id: 'url-encoder', name: 'URL Encoder', desc: 'เข้ารหัส URL (Percent-encoding)', icon: <LinkIcon className="w-8 h-8 text-teal-500" />, href: '/tools/url-encoder' },
       { id: 'uuid', name: 'UUID Generator', desc: 'สร้างรหัส GUID / UUID v4', icon: <Fingerprint className="w-8 h-8 text-slate-500" />, href: '/tools/uuid' },
       { id: 'text-to-binary', name: 'Text to Binary', desc: 'แปลงข้อความเป็นรหัสฐานสอง', icon: <Binary className="w-8 h-8 text-cyan-500" />, href: '/tools/text-to-binary' },
+      ...devTools.map(t => {
+        const IconComp = (LucideIcons as any)[t.icon] || LucideIcons.Code2
+        return {
+          id: t.id,
+          name: t.name,
+          desc: t.desc,
+          icon: <IconComp className="w-8 h-8 text-orange-400" />,
+          href: `/dev/${t.id}`
+        }
+      })
     ]
   },
   {
@@ -52,12 +63,21 @@ const allCategories = [
     name: 'Utilities & Everyday',
     tools: [
       { id: 'qrcode', name: 'QR Code Generator', desc: 'สร้างคิวอาร์โค้ดฟรีไม่มีหมดอายุ', icon: <QrCode className="w-8 h-8 text-blue-500" />, href: '/tools/qrcode' },
-      { id: 'image-compressor', name: 'Image Compressor', desc: 'ย่อขนาดรูปภาพ JPG/PNG แบบออฟไลน์', icon: <ImageIcon className="w-8 h-8 text-emerald-500" />, href: '/tools/image-compressor' },
       { id: 'password', name: 'Password Generator', desc: 'สุ่มรหัสผ่านที่ปลอดภัย', icon: <KeyRound className="w-8 h-8 text-green-500" />, href: '/tools/password' },
       { id: 'random-number', name: 'Random Number', desc: 'สุ่มตัวเลข กำหนดช่วงได้', icon: <Dices className="w-8 h-8 text-rose-500" />, href: '/tools/random-number' },
       { id: 'bmi-calculator', name: 'BMI Calculator', desc: 'คำนวณดัชนีมวลกาย', icon: <Calculator className="w-8 h-8 text-red-500" />, href: '/tools/bmi-calculator' },
-      { id: 'color-converter', name: 'Color Converter', desc: 'แปลงโค้ดสี HEX, RGB, HSL', icon: <Palette className="w-8 h-8 text-pink-500" />, href: '/tools/color-converter' },
       { id: 'percentage', name: 'Percentage Calculator', desc: 'คำนวณหาค่าเปอร์เซ็นต์ ร้อยละ', icon: <Calculator className="w-8 h-8 text-amber-500" />, href: '/tools/percentage' },
+    ]
+  },
+  {
+    name: 'Image & Design Tools',
+    tools: [
+      { id: 'image-resizer', name: 'Image Resizer', desc: 'ปรับขนาดรูปภาพ (กว้าง x ยาว)', icon: <ImageIcon className="w-8 h-8 text-blue-500" />, href: '/tools/image-resizer' },
+      { id: 'image-compressor', name: 'Image Compressor', desc: 'ย่อขนาดไฟล์รูปภาพ JPG/PNG', icon: <ImageIcon className="w-8 h-8 text-emerald-500" />, href: '/tools/image-compressor' },
+      { id: 'css-gradient', name: 'CSS Gradient', desc: 'สร้างโค้ดไล่สีพื้นหลัง CSS', icon: <Palette className="w-8 h-8 text-pink-500" />, href: '/tools/css-gradient' },
+      { id: 'box-shadow', name: 'Box Shadow', desc: 'สร้างเงากล่องข้อความ (CSS Box Shadow)', icon: <Palette className="w-8 h-8 text-purple-500" />, href: '/tools/box-shadow' },
+      { id: 'base64-to-image', name: 'Base64 to Image', desc: 'แปลงโค้ด Base64 เป็นรูปภาพ', icon: <ImageIcon className="w-8 h-8 text-orange-500" />, href: '/tools/base64-to-image' },
+      { id: 'color-converter', name: 'Color Converter', desc: 'แปลงโค้ดสี HEX, RGB, HSL', icon: <Palette className="w-8 h-8 text-pink-500" />, href: '/tools/color-converter' },
     ]
   },
   {
