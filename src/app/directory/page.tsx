@@ -35,28 +35,28 @@ export default function DirectoryPage() {
 
       <AdSlot />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-6">
         {directoryLinks.map((link, idx) => (
           <a 
             key={idx} 
             href={link.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex flex-col bg-white dark:bg-gray-900 p-6 rounded-2xl border dark:border-gray-800 shadow-sm hover:shadow-md hover:border-purple-300 dark:hover:border-purple-700 transition-all"
+            className="group flex flex-col bg-white dark:bg-gray-900 p-3 sm:p-5 rounded-2xl border dark:border-gray-800 shadow-sm hover:shadow-md hover:border-purple-300 dark:hover:border-purple-700 transition-all h-full"
           >
-            <div className="flex justify-between items-start mb-4">
-              <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-semibold text-gray-600 dark:text-gray-300 rounded-full">
+            <div className="flex justify-between items-start mb-2 sm:mb-4">
+              <span className="px-2 py-0.5 sm:px-3 sm:py-1 bg-purple-50 dark:bg-purple-900/30 text-[10px] sm:text-xs font-semibold text-purple-600 dark:text-purple-300 rounded-full truncate mr-2">
                 {link.category}
               </span>
-              <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-purple-500 transition-colors" />
+              <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 group-hover:text-purple-500 transition-colors shrink-0" />
             </div>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+            <h3 className="text-sm sm:text-lg font-bold text-gray-900 dark:text-white mb-1 sm:mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors line-clamp-1 sm:line-clamp-none">
               {link.name}
             </h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+            <p className="hidden sm:block text-xs sm:text-sm text-gray-600 dark:text-gray-400 line-clamp-2 flex-grow">
               {link.desc}
             </p>
-            <div className="mt-4 pt-4 border-t dark:border-gray-800 text-sm font-medium text-purple-600 dark:text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="hidden sm:block mt-4 pt-4 border-t dark:border-gray-800 text-sm font-medium text-purple-600 dark:text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity">
               เยี่ยมชมเว็บไซต์ →
             </div>
           </a>
