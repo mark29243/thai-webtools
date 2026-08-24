@@ -31,6 +31,7 @@ const allCategories = [
       { id: 'base64', name: 'Base64 Encoder', desc: 'เข้ารหัสและถอดรหัส Base64', icon: <Hash className="w-8 h-8 text-indigo-500" />, href: '/tools/base64' },
       { id: 'url-encoder', name: 'URL Encoder', desc: 'เข้ารหัส URL (Percent-encoding)', icon: <LinkIcon className="w-8 h-8 text-teal-500" />, href: '/tools/url-encoder' },
       { id: 'uuid', name: 'UUID Generator', desc: 'สร้างรหัส GUID / UUID v4', icon: <Fingerprint className="w-8 h-8 text-slate-500" />, href: '/tools/uuid' },
+      { id: 'diff-checker', name: 'Text Diff Checker', desc: 'เปรียบเทียบข้อความหรือโค้ด หาจุดที่ต่างกัน', icon: <FileText className="w-8 h-8 text-indigo-500" />, href: '/tools/diff-checker' },
       { id: 'text-to-binary', name: 'Text to Binary', desc: 'แปลงข้อความเป็นรหัสฐานสอง', icon: <Binary className="w-8 h-8 text-cyan-500" />, href: '/tools/text-to-binary' },
       ...devTools.map(t => {
         const IconComp = (LucideIcons as any)[t.icon] || LucideIcons.Code2

@@ -6,6 +6,16 @@ import { financeTools } from '@/data/finance-tools'
 import { AdSlot } from '@/components/AdSlot'
 import { RotateCcw } from 'lucide-react'
 import * as LucideIcons from 'lucide-react'
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend
+} from 'recharts'
 
 export default function FinanceToolPage({ params }: { params: Promise<{ action: string }> }) {
   const resolvedParams = use(params)
@@ -24,7 +34,7 @@ export default function FinanceToolPage({ params }: { params: Promise<{ action: 
     return initial
   })
 
-  const [output, setOutput] = useState<{ result: string, details?: string[] }>({ result: '' })
+  const [output, setOutput] = useState<{ result: string, details?: string[], chartData?: any[], chartConfig?: any[] }>({ result: '' })
 
   const IconComponent = (LucideIcons as any)[tool.icon] || LucideIcons.Calculator
 
@@ -107,6 +117,52 @@ export default function FinanceToolPage({ params }: { params: Promise<{ action: 
           )}
         </div>
       </div>
+
+      {/* Chart Panel */}
+      {output.chartData && output.chartConfig && (
+        <div className="bg-white dark:bg-gray-900 p-6 md:p-8 rounded-3xl shadow-sm border dark:border-gray-800 overflow-hidden">
+          <h2 className="font-semibold text-lg mb-6">กราฟแสดงการเติบโต (Visual Projection)</h2>
+          <div className="h-[400px] w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={output.chartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                <defs>
+                  {output.chartConfig.map((config, index) => (
+                    <linearGradient key={`color${config.dataKey}`} id={`color${config.dataKey}`} x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor={config.color} stopOpacity={0.8}/>
+                      <stop offset="95%" stopColor={config.color} stopOpacity={0}/>
+                    </linearGradient>
+                  ))}
+                </defs>
+                <XAxis dataKey="year" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
+                <YAxis 
+                  stroke="#888888" 
+                  fontSize={12} 
+                  tickLine={false} 
+                  axisLine={false} 
+                  tickFormatter={(value) => `฿${(value / 1000).toFixed(0)}k`}
+                />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
+                <Tooltip 
+                  formatter={(value: any) => [`฿${Number(value).toLocaleString()}`, '']}
+                  contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                />
+                <Legend iconType="circle" />
+                {output.chartConfig.map((config, index) => (
+                  <Area
+                    key={config.dataKey}
+                    type="monotone"
+                    dataKey={config.dataKey}
+                    name={config.name}
+                    stroke={config.color}
+                    fillOpacity={1}
+                    fill={`url(#color${config.dataKey})`}
+                  />
+                ))}
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      )}
 
       <AdSlot />
     </div>

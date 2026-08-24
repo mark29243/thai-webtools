@@ -4,7 +4,12 @@ export interface FinanceToolDef {
   desc: string;
   icon: string;
   inputs: { name: string; label: string; type: 'number' | 'text'; placeholder?: string; default?: number }[];
-  action: (inputs: Record<string, any>) => { result: string; details?: string[] };
+  action: (inputs: Record<string, any>) => { 
+    result: string; 
+    details?: string[];
+    chartData?: any[];
+    chartConfig?: { dataKey: string; color: string; name: string; type?: 'bar' | 'area' | 'line' }[];
+  };
 }
 
 export const financeTools: FinanceToolDef[] = [
@@ -102,11 +107,38 @@ export const financeTools: FinanceToolDef[] = [
       const n = y * 12;
       const emi = (p * rMonthly * Math.pow(1 + rMonthly, n)) / (Math.pow(1 + rMonthly, n) - 1);
       const totalPayment = emi * n;
+      
+      const chartData = [];
+      let balance = p;
+      let totalInterest = 0;
+      
+      // Add year 0
+      chartData.push({ year: 'ปีที่ 0', balance: p, totalInterest: 0 });
+
+      for (let i = 1; i <= y; i++) {
+        for(let m = 0; m < 12; m++) {
+          const interestForMonth = balance * rMonthly;
+          const principalForMonth = emi - interestForMonth;
+          balance -= principalForMonth;
+          totalInterest += interestForMonth;
+        }
+        chartData.push({
+          year: `ปีที่ ${i}`,
+          balance: Math.max(0, balance),
+          totalInterest
+        });
+      }
+
       return {
         result: `ผ่อนเดือนละ: ฿${emi.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
         details: [
           `จ่ายดอกเบี้ยรวม: ฿${(totalPayment - p).toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
           `ยอดชำระทั้งหมด: ฿${totalPayment.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+        ],
+        chartData,
+        chartConfig: [
+          { dataKey: 'balance', name: 'หนี้คงเหลือ', color: '#ef4444', type: 'area' },
+          { dataKey: 'totalInterest', name: 'ดอกเบี้ยสะสมที่จ่าย', color: '#f59e0b', type: 'area' }
         ]
       };
     }
@@ -129,11 +161,29 @@ export const financeTools: FinanceToolDef[] = [
       
       const a = p * Math.pow((1 + r / 100), y);
       
+      const chartData = [];
+      for (let i = 0; i <= y; i++) {
+        const principalStr = p;
+        const totalStr = p * Math.pow((1 + r / 100), i);
+        const interestStr = totalStr - p;
+        chartData.push({
+          year: `ปีที่ ${i}`,
+          principal: principalStr,
+          interest: interestStr,
+          total: totalStr
+        });
+      }
+
       return {
         result: `เงินรวมสุทธิ: ฿${a.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
         details: [
           `เงินต้น: ฿${p.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
           `ดอกเบี้ยที่ได้รับ: ฿${(a - p).toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+        ],
+        chartData,
+        chartConfig: [
+          { dataKey: 'principal', name: 'เงินต้น', color: '#3b82f6', type: 'area' },
+          { dataKey: 'interest', name: 'ดอกเบี้ยสะสม', color: '#22c55e', type: 'area' }
         ]
       };
     }

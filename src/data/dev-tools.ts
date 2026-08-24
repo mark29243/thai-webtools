@@ -1,3 +1,5 @@
+import { format as formatSql } from 'sql-formatter';
+
 export interface DevToolDef {
   id: string;
   name: string;
@@ -8,6 +10,20 @@ export interface DevToolDef {
 }
 
 export const devTools: DevToolDef[] = [
+  {
+    id: 'sql-formatter',
+    name: 'SQL Formatter',
+    desc: 'จัดรูปแบบโค้ด SQL ให้สวยงาม อ่านง่าย (รองรับหลาย Dialect)',
+    icon: 'Database',
+    placeholder: 'วางโค้ด SQL ที่นี่... (เช่น SELECT * FROM users)',
+    action: (t) => {
+      try {
+        return formatSql(t, { language: 'sql' });
+      } catch (e) {
+        return 'Error: Invalid SQL format';
+      }
+    }
+  },
   {
     id: 'html-minifier',
     name: 'HTML Minifier',
