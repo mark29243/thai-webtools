@@ -2,7 +2,34 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { QrCode, KeyRound, WholeWord, FileJson, Palette, Hash, Link as LinkIcon, Calculator, FileText, Fingerprint, Dices, Binary, Search, Key, Image as ImageIcon, FilePlus, Droplet, Info, RefreshCw, Activity, Type, Coins } from 'lucide-react'
+import { 
+  QrCode, 
+  KeyRound, 
+  WholeWord, 
+  FileJson, 
+  Palette, 
+  Hash, 
+  Link as LinkIcon, 
+  Calculator, 
+  FileText, 
+  Fingerprint, 
+  Dices, 
+  Binary, 
+  Search, 
+  Key, 
+  Image as ImageIcon, 
+  FilePlus, 
+  Droplet, 
+  Info, 
+  RefreshCw, 
+  Activity, 
+  Type, 
+  Coins,
+  Receipt,
+  ScanLine,
+  Fuel,
+  ShieldAlert
+} from 'lucide-react'
 import * as LucideIcons from 'lucide-react'
 import { textTools } from '@/data/text-tools'
 import { financeTools } from '@/data/finance-tools'
@@ -13,13 +40,16 @@ const allCategories = [
   {
     name: '🔥 ยอดฮิต (Popular Tools)',
     tools: [
+      { id: 'split-bill', name: 'ระบบหารบิลแยกรายการ', desc: 'หารค่าอาหารตามจริง ใครกินอะไรจ่ายอันนั้น รองรับ VAT และ Service Charge', icon: <Receipt className="w-8 h-8 text-emerald-500" />, href: '/tools/split-bill' },
+      { id: 'image-ocr', name: 'แกะข้อความจากรูปภาพ (OCR)', desc: 'สกัดข้อความจากรูปภาพ เอกสาร สลิป ป้าย ให้ออกมาเป็นตัวหนังสือ', icon: <ScanLine className="w-8 h-8 text-indigo-500" />, href: '/tools/image-ocr' },
+      { id: 'fuel-price', name: 'เทียบราคาน้ำมันวันนี้', desc: 'เช็กราคาน้ำมัน ปตท. บางจาก เชลล์ คาลเท็กซ์ พีที ซัสโก้ คำนวณค่าน้ำมันทริป', icon: <Fuel className="w-8 h-8 text-amber-500" />, href: '/tools/fuel-price' },
+      { id: 'emergency-numbers', name: 'รวมเบอร์โทรฉุกเฉิน', desc: 'สายด่วนเหตุด่วนเหตุร้าย กู้ชีพการแพทย์ อายัดบัญชีมิจฉาชีพ 24 ชม.', icon: <ShieldAlert className="w-8 h-8 text-rose-500" />, href: '/tools/emergency-numbers' },
       { id: 'lottery', name: 'ตรวจสลากกินแบ่งฯ', desc: 'ตรวจหวยงวดล่าสุด อัปเดตไวสุด เช็กง่ายได้เงินจริง', icon: <Coins className="w-8 h-8 text-blue-500" />, href: '/tools/lottery' },
       { id: 'qrcode', name: 'QR Code Generator', desc: 'สร้างคิวอาร์โค้ดฟรีไม่มีหมดอายุ', icon: <QrCode className="w-8 h-8 text-blue-500" />, href: '/tools/qrcode' },
       { id: 'image-compressor', name: 'Image Compressor', desc: 'ย่อขนาดไฟล์รูปภาพ JPG/PNG แบบกลุ่ม', icon: <ImageIcon className="w-8 h-8 text-emerald-500" />, href: '/tools/image-compressor' },
       { id: 'image-resizer', name: 'Image Resizer', desc: 'ปรับขนาดรูปภาพ (กว้าง x ยาว)', icon: <ImageIcon className="w-8 h-8 text-blue-500" />, href: '/tools/image-resizer' },
-      { id: 'pdf-ocr', name: 'PDF to Text (OCR)', desc: 'สกัดข้อความจากไฟล์ภาพและ PDF', icon: <FileText className="w-8 h-8 text-indigo-500" />, href: '/tools/pdf-ocr' },
+      { id: 'random-picker', name: 'Random Name Picker', desc: 'วิ่งม้าแข่งกันสุ่มรายชื่อจับฉลาก', icon: <Dices className="w-8 h-8 text-pink-500" />, href: '/tools/random-picker' },
       { id: 'speed-test', name: 'Internet Speed Test', desc: 'ทดสอบความเร็วอินเทอร์เน็ต', icon: <Activity className="w-8 h-8 text-green-500" />, href: '/tools/speed-test' },
-      { id: 'random-picker', name: 'Random Name Picker', desc: 'วงล้อสุ่มรายชื่อจับฉลาก', icon: <Dices className="w-8 h-8 text-pink-500" />, href: '/tools/random-picker' },
       { id: 'password', name: 'Password Generator', desc: 'สุ่มรหัสผ่านที่ปลอดภัย', icon: <KeyRound className="w-8 h-8 text-orange-500" />, href: '/tools/password' },
     ]
   },
@@ -78,6 +108,8 @@ const allCategories = [
   {
     name: 'Utilities & Everyday',
     tools: [
+      { id: 'emergency-numbers', name: 'รวมเบอร์โทรฉุกเฉิน', desc: 'สายด่วนเหตุด่วนเหตุร้าย กู้ชีพการแพทย์ อายัดบัญชีมิจฉาชีพ', icon: <ShieldAlert className="w-8 h-8 text-rose-500" />, href: '/tools/emergency-numbers' },
+      { id: 'fuel-price', name: 'เทียบราคาน้ำมันวันนี้', desc: 'เช็กราคาน้ำมัน ปตท. บางจาก เชลล์ คาลเท็กซ์ พีที ซัสโก้', icon: <Fuel className="w-8 h-8 text-amber-500" />, href: '/tools/fuel-price' },
       { id: 'qrcode', name: 'QR Code Generator', desc: 'สร้างคิวอาร์โค้ดฟรีไม่มีหมดอายุ', icon: <QrCode className="w-8 h-8 text-blue-500" />, href: '/tools/qrcode' },
       { id: 'password', name: 'Password Generator', desc: 'สุ่มรหัสผ่านที่ปลอดภัย', icon: <KeyRound className="w-8 h-8 text-green-500" />, href: '/tools/password' },
       { id: 'random-number', name: 'Random Number', desc: 'สุ่มตัวเลข กำหนดช่วงได้', icon: <Dices className="w-8 h-8 text-rose-500" />, href: '/tools/random-number' },
@@ -88,6 +120,7 @@ const allCategories = [
   {
     name: 'Image & Design Tools',
     tools: [
+      { id: 'image-ocr', name: 'Image to Text (OCR)', desc: 'สกัดข้อความจากรูปภาพ สลิป ป้าย หรือภาพแคปหน้าจอ', icon: <ScanLine className="w-8 h-8 text-indigo-500" />, href: '/tools/image-ocr' },
       { id: 'image-resizer', name: 'Image Resizer', desc: 'ปรับขนาดรูปภาพ (กว้าง x ยาว)', icon: <ImageIcon className="w-8 h-8 text-blue-500" />, href: '/tools/image-resizer' },
       { id: 'image-compressor', name: 'Image Compressor', desc: 'ย่อขนาดไฟล์รูปภาพ JPG/PNG', icon: <ImageIcon className="w-8 h-8 text-emerald-500" />, href: '/tools/image-compressor' },
       { id: 'css-gradient', name: 'CSS Gradient', desc: 'สร้างโค้ดไล่สีพื้นหลัง CSS', icon: <Palette className="w-8 h-8 text-pink-500" />, href: '/tools/css-gradient' },
@@ -99,6 +132,7 @@ const allCategories = [
   {
     name: 'Finance & Calculators',
     tools: [
+      { id: 'split-bill', name: 'ระบบหารบิลแยกรายการ', desc: 'หารค่าอาหารตามจริง ใครกินอะไรจ่ายอันนั้น รองรับ VAT และ Service Charge', icon: <Receipt className="w-8 h-8 text-emerald-500" />, href: '/tools/split-bill' },
       ...financeTools.map(t => {
         const IconComp = (LucideIcons as any)[t.icon] || LucideIcons.Calculator
         return {
