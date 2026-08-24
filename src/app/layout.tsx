@@ -7,6 +7,7 @@ import { BottomNav } from '@/components/BottomNav'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { Toaster } from 'react-hot-toast'
 import { ScrollToTop } from '@/components/ScrollToTop'
+import { CookieBanner } from '@/components/CookieBanner'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -50,6 +51,7 @@ export default function RootLayout({
           <Footer />
           <BottomNav />
           <ScrollToTop />
+          <CookieBanner />
           <Toaster position="bottom-center" toastOptions={{ className: 'dark:bg-gray-800 dark:text-white' }} />
         </ThemeProvider>
       </body>
