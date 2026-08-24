@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import { 
   QrCode, 
@@ -28,15 +28,30 @@ import {
   Receipt,
   ScanLine,
   Fuel,
-  ShieldAlert
+  ShieldAlert,
+  Star
 } from 'lucide-react'
 import * as LucideIcons from 'lucide-react'
+import toast from 'react-hot-toast'
 import { textTools } from '@/data/text-tools'
 import { financeTools } from '@/data/finance-tools'
 import { devTools } from '@/data/dev-tools'
 import { mathTools } from '@/data/math-tools'
 
-const allCategories = [
+export interface ToolItem {
+  id: string
+  name: string
+  desc: string
+  icon: React.ReactNode
+  href: string
+}
+
+export interface ToolCategory {
+  name: string
+  tools: ToolItem[]
+}
+
+const allCategories: ToolCategory[] = [
   {
     name: '🔥 ยอดฮิต (Popular Tools)',
     tools: [
@@ -204,15 +219,128 @@ const allCategories = [
 
 export function ToolGrid() {
   const [search, setSearch] = useState('')
+  const [favorites, setFavorites] = useState<string[]>([])
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  // Load favorites from localStorage
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('thai_webtools_favorites')
+      if (saved) {
+        setFavorites(JSON.parse(saved))
+      }
+    } catch (e) {
+      console.error('Failed to load favorites', e)
+    } finally {
+      setIsLoaded(true)
+    }
+  }, [])
+
+  // Toggle favorite
+  const toggleFavorite = (e: React.MouseEvent, toolId: string) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    setFavorites(prev => {
+      let updated: string[]
+      if (prev.includes(toolId)) {
+        updated = prev.filter(id => id !== toolId)
+        toast('นำออกจากรายการโปรดแล้ว', { icon: '⭐' })
+      } else {
+        updated = [toolId, ...prev]
+        toast.success('ติดดาวเพิ่มในรายการโปรดแล้ว!', { icon: '⭐' })
+      }
+      try {
+        localStorage.setItem('thai_webtools_favorites', JSON.stringify(updated))
+      } catch (err) {
+        console.error(err)
+      }
+      return updated
+    })
+  }
+
+  // Flatten all unique tools for quick lookup
+  const allToolsMap = useMemo(() => {
+    const map = new Map<string, typeof allCategories[0]['tools'][0]>()
+    allCategories.forEach(cat => {
+      cat.tools.forEach(tool => {
+        if (!map.has(tool.id)) {
+          map.set(tool.id, tool)
+        }
+      })
+    })
+    return map
+  }, [])
+
+  // Get favorite tools list
+  const favoriteTools = useMemo(() => {
+    return favorites
+      .map(id => allToolsMap.get(id))
+      .filter((t): t is typeof allCategories[0]['tools'][0] => Boolean(t))
+      .filter(tool => 
+        !search ||
+        tool.name.toLowerCase().includes(search.toLowerCase()) || 
+        tool.desc.toLowerCase().includes(search.toLowerCase())
+      )
+  }, [favorites, allToolsMap, search])
 
   // Filter tools based on search query
-  const filteredCategories = allCategories.map(cat => ({
-    ...cat,
-    tools: cat.tools.filter(tool => 
-      tool.name.toLowerCase().includes(search.toLowerCase()) || 
-      tool.desc.toLowerCase().includes(search.toLowerCase())
+  const filteredCategories = useMemo(() => {
+    return allCategories.map(cat => ({
+      ...cat,
+      tools: cat.tools.filter(tool => 
+        tool.name.toLowerCase().includes(search.toLowerCase()) || 
+        tool.desc.toLowerCase().includes(search.toLowerCase())
+      )
+    })).filter(cat => cat.tools.length > 0)
+  }, [search])
+
+  const renderToolCard = (tool: typeof allCategories[0]['tools'][0]) => {
+    const isFav = favorites.includes(tool.id)
+
+    return (
+      <div key={tool.id} className="relative group">
+        <Link 
+          href={tool.href}
+          className="bg-white dark:bg-gray-900 p-3 sm:p-5 rounded-2xl shadow-sm border dark:border-gray-800 hover:shadow-md hover:border-blue-300 dark:hover:border-blue-700 transition-all flex flex-col items-center text-center h-full"
+        >
+          <div className="p-3 sm:p-4 bg-gray-50 dark:bg-gray-800 rounded-xl mb-2 sm:mb-3 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/40 transition-colors">
+            <div className="group-hover:scale-110 transition-transform [&>svg]:w-6 [&>svg]:h-6 sm:[&>svg]:w-8 sm:[&>svg]:h-8">
+              {tool.icon}
+            </div>
+          </div>
+          <div className="w-full">
+            <h3 className="font-semibold text-[13px] sm:text-base text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-tight line-clamp-2 px-1">
+              {tool.name}
+            </h3>
+            <p className="hidden sm:block text-xs text-gray-500 dark:text-gray-400 mt-1.5 leading-relaxed line-clamp-2">
+              {tool.desc}
+            </p>
+          </div>
+        </Link>
+
+        {/* Star Button */}
+        <button
+          type="button"
+          onClick={(e) => toggleFavorite(e, tool.id)}
+          className={`absolute top-2.5 right-2.5 p-1.5 rounded-full transition-all z-10 ${
+            isFav 
+              ? 'opacity-100 bg-amber-50 dark:bg-amber-950/80 shadow-sm border border-amber-200 dark:border-amber-800/80' 
+              : 'opacity-40 sm:opacity-0 group-hover:opacity-100 hover:bg-gray-100 dark:hover:bg-gray-800'
+          }`}
+          title={isFav ? "นำออกจากรายการโปรด" : "ติดดาวเป็นรายการโปรด"}
+        >
+          <Star 
+            className={`w-4 h-4 transition-transform active:scale-125 ${
+              isFav 
+                ? 'fill-amber-400 text-amber-400 drop-shadow-sm' 
+                : 'text-gray-400 dark:text-gray-500 hover:text-amber-400 dark:hover:text-amber-400'
+            }`} 
+          />
+        </button>
+      </div>
     )
-  })).filter(cat => cat.tools.length > 0)
+  }
 
   return (
     <div className="space-y-8">
@@ -242,28 +370,39 @@ export function ToolGrid() {
 
       {/* Grid */}
       <div className="space-y-12">
+        {/* ⭐ Favorite Tools Section (Rendered on top if user has favorites) */}
+        {isLoaded && favoriteTools.length > 0 && (
+          <section className="bg-gradient-to-br from-amber-50/50 via-yellow-50/30 to-transparent dark:from-amber-950/20 dark:via-yellow-950/10 dark:to-transparent p-4 sm:p-6 rounded-3xl border-2 border-amber-300/80 dark:border-amber-700/50 shadow-sm">
+            <div className="flex items-center justify-between mb-6 pb-2 border-b border-amber-200 dark:border-amber-900/60">
+              <div className="flex items-center gap-2">
+                <Star className="w-6 h-6 fill-amber-400 text-amber-400" />
+                <h2 className="text-xl sm:text-2xl font-black text-gray-900 dark:text-white">
+                  ⭐ เครื่องมือโปรดของคุณ (Favorite Tools)
+                </h2>
+              </div>
+              <span className="text-xs font-semibold text-amber-800 dark:text-amber-300 bg-amber-100 dark:bg-amber-950 px-3 py-1 rounded-full border border-amber-200 dark:border-amber-800">
+                {favoriteTools.length} รายการ
+              </span>
+            </div>
+            
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+              {favoriteTools.map(tool => renderToolCard(tool))}
+            </div>
+          </section>
+        )}
+
+        {/* Regular & Categorized Tools */}
         {filteredCategories.length > 0 ? (
           filteredCategories.map((cat, idx) => (
             <section key={idx}>
-              <h2 className="text-xl sm:text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100 border-b dark:border-gray-800 pb-2">{cat.name}</h2>
+              <h2 className="text-xl sm:text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100 border-b dark:border-gray-800 pb-2 flex items-center justify-between">
+                <span>{cat.name}</span>
+                <span className="text-xs font-normal text-gray-400">
+                  {cat.tools.length} เครื่องมือ
+                </span>
+              </h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
-                {cat.tools.map((tool) => (
-                  <Link 
-                    key={tool.id} 
-                    href={tool.href}
-                    className="bg-white dark:bg-gray-900 p-3 sm:p-5 rounded-2xl shadow-sm border dark:border-gray-800 hover:shadow-md hover:border-blue-300 dark:hover:border-blue-700 transition-all flex flex-col items-center text-center group"
-                  >
-                    <div className="p-3 sm:p-4 bg-gray-50 dark:bg-gray-800 rounded-xl mb-2 sm:mb-3 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/40 transition-colors">
-                      <div className="group-hover:scale-110 transition-transform [&>svg]:w-6 [&>svg]:h-6 sm:[&>svg]:w-8 sm:[&>svg]:h-8">
-                        {tool.icon}
-                      </div>
-                    </div>
-                    <div className="w-full">
-                      <h3 className="font-semibold text-[13px] sm:text-base text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-tight line-clamp-2 px-1">{tool.name}</h3>
-                      <p className="hidden sm:block text-xs text-gray-500 dark:text-gray-400 mt-1.5 leading-relaxed line-clamp-2">{tool.desc}</p>
-                    </div>
-                  </Link>
-                ))}
+                {cat.tools.map(tool => renderToolCard(tool))}
               </div>
             </section>
           ))
