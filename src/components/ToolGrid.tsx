@@ -40,11 +40,12 @@ const allCategories = [
   {
     name: '🔥 ยอดฮิต (Popular Tools)',
     tools: [
+      { id: 'gold-price', name: 'ราคาทองวันนี้ (Live)', desc: 'เช็กราคาทองคำแท่ง-รูปพรรณ 96.5% อัปเดตเรียลไทม์ พร้อมคำนวณค่าน้ำหนัก', icon: <Coins className="w-8 h-8 text-amber-500" />, href: '/tools/gold-price' },
+      { id: 'lottery', name: 'ตรวจสลากกินแบ่งฯ', desc: 'ตรวจหวยงวดล่าสุด อัปเดตไวสุด เช็กง่ายได้เงินจริง', icon: <Coins className="w-8 h-8 text-blue-500" />, href: '/tools/lottery' },
       { id: 'split-bill', name: 'ระบบหารบิลแยกรายการ', desc: 'หารค่าอาหารตามจริง ใครกินอะไรจ่ายอันนั้น รองรับ VAT และ Service Charge', icon: <Receipt className="w-8 h-8 text-emerald-500" />, href: '/tools/split-bill' },
       { id: 'image-ocr', name: 'แกะข้อความจากรูปภาพ (OCR)', desc: 'สกัดข้อความจากรูปภาพ เอกสาร สลิป ป้าย ให้ออกมาเป็นตัวหนังสือ', icon: <ScanLine className="w-8 h-8 text-indigo-500" />, href: '/tools/image-ocr' },
       { id: 'fuel-price', name: 'เทียบราคาน้ำมันวันนี้', desc: 'เช็กราคาน้ำมัน ปตท. บางจาก เชลล์ คาลเท็กซ์ พีที ซัสโก้ คำนวณค่าน้ำมันทริป', icon: <Fuel className="w-8 h-8 text-amber-500" />, href: '/tools/fuel-price' },
       { id: 'emergency-numbers', name: 'รวมเบอร์โทรฉุกเฉิน', desc: 'สายด่วนเหตุด่วนเหตุร้าย กู้ชีพการแพทย์ อายัดบัญชีมิจฉาชีพ 24 ชม.', icon: <ShieldAlert className="w-8 h-8 text-rose-500" />, href: '/tools/emergency-numbers' },
-      { id: 'lottery', name: 'ตรวจสลากกินแบ่งฯ', desc: 'ตรวจหวยงวดล่าสุด อัปเดตไวสุด เช็กง่ายได้เงินจริง', icon: <Coins className="w-8 h-8 text-blue-500" />, href: '/tools/lottery' },
       { id: 'qrcode', name: 'QR Code Generator', desc: 'สร้างคิวอาร์โค้ดฟรีไม่มีหมดอายุ', icon: <QrCode className="w-8 h-8 text-blue-500" />, href: '/tools/qrcode' },
       { id: 'image-compressor', name: 'Image Compressor', desc: 'ย่อขนาดไฟล์รูปภาพ JPG/PNG แบบกลุ่ม', icon: <ImageIcon className="w-8 h-8 text-emerald-500" />, href: '/tools/image-compressor' },
       { id: 'image-resizer', name: 'Image Resizer', desc: 'ปรับขนาดรูปภาพ (กว้าง x ยาว)', icon: <ImageIcon className="w-8 h-8 text-blue-500" />, href: '/tools/image-resizer' },
@@ -132,6 +133,7 @@ const allCategories = [
   {
     name: 'Finance & Calculators',
     tools: [
+      { id: 'gold-price', name: 'ราคาทองวันนี้ (Live)', desc: 'เช็กราคาทองคำแท่ง-รูปพรรณ 96.5% อัปเดตเรียลไทม์ พร้อมคำนวณค่าน้ำหนัก', icon: <Coins className="w-8 h-8 text-amber-500" />, href: '/tools/gold-price' },
       { id: 'split-bill', name: 'ระบบหารบิลแยกรายการ', desc: 'หารค่าอาหารตามจริง ใครกินอะไรจ่ายอันนั้น รองรับ VAT และ Service Charge', icon: <Receipt className="w-8 h-8 text-emerald-500" />, href: '/tools/split-bill' },
       ...financeTools.map(t => {
         const IconComp = (LucideIcons as any)[t.icon] || LucideIcons.Calculator
