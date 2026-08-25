@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://thaiwebtools.com/sitemap.xml',
+    sitemap: 'https://thai-webtools.vercel.app/sitemap.xml',
   }
 }

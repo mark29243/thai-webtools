@@ -227,8 +227,22 @@ const allCategories: ToolCategory[] = [
   }
 ]
 
+const CATEGORY_TABS = [
+  { id: 'all', label: '✨ ทั้งหมด' },
+  { id: '🔥 ยอดฮิต (Popular Tools)', label: '🔥 ยอดฮิต' },
+  { id: 'Finance & Calculators', label: '💰 การเงิน & ภาษี' },
+  { id: 'Image & Design Tools', label: '🖼️ รูปภาพ & ดีไซน์' },
+  { id: 'PDF Tools', label: '📄 จัดการ PDF' },
+  { id: 'Developer Tools', label: '💻 นักพัฒนา' },
+  { id: 'Text & Writing Tools', label: '📝 ข้อความ & ฟอนต์' },
+  { id: 'Unit Converters', label: '📐 แปลงหน่วย' },
+  { id: 'Social & Fun Tools', label: '📱 โซเชียล & มีม' },
+  { id: 'Utilities & Everyday', label: '⚡ ทั่วไป' },
+]
+
 export function ToolGrid() {
   const [search, setSearch] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('all')
   const [favorites, setFavorites] = useState<string[]>([])
   const [isLoaded, setIsLoaded] = useState(false)
 
@@ -294,16 +308,22 @@ export function ToolGrid() {
       )
   }, [favorites, allToolsMap, search])
 
-  // Filter tools based on search query
+  // Filter tools based on search query and selected category
   const filteredCategories = useMemo(() => {
-    return allCategories.map(cat => ({
+    let list = allCategories
+
+    if (selectedCategory !== 'all') {
+      list = list.filter(cat => cat.name === selectedCategory)
+    }
+
+    return list.map(cat => ({
       ...cat,
       tools: cat.tools.filter(tool => 
         tool.name.toLowerCase().includes(search.toLowerCase()) || 
         tool.desc.toLowerCase().includes(search.toLowerCase())
       )
     })).filter(cat => cat.tools.length > 0)
-  }, [search])
+  }, [search, selectedCategory])
 
   const renderToolCard = (tool: typeof allCategories[0]['tools'][0]) => {
     const isFav = favorites.includes(tool.id)
@@ -354,34 +374,56 @@ export function ToolGrid() {
 
   return (
     <div className="space-y-8">
-      {/* Search Bar */}
-      <div className="relative max-w-2xl mx-auto -mt-6 mb-12 px-4 sm:px-0">
-        <div className="absolute inset-y-0 left-4 sm:left-0 pl-4 flex items-center pointer-events-none">
-          <Search className="h-5 w-5 text-gray-400" />
+      {/* Search Bar & Category Filter Chips */}
+      <div className="space-y-4 max-w-4xl mx-auto -mt-6 mb-8 px-4 sm:px-0">
+        <div className="relative max-w-2xl mx-auto">
+          <div className="absolute inset-y-0 left-4 sm:left-0 pl-4 flex items-center pointer-events-none">
+            <Search className="h-5 w-5 text-gray-400" />
+          </div>
+          <input
+            type="text"
+            className="block w-full pl-11 pr-12 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-full shadow-lg text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow text-base sm:text-lg"
+            placeholder="ค้นหาเครื่องมือที่ต้องการ (เช่น ภาษี, QR Code, PDF, ย่อรูป, ทอง)..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          {search && (
+            <button 
+              onClick={() => setSearch('')}
+              className="absolute inset-y-0 right-4 sm:right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 bg-gray-100 dark:bg-gray-800 rounded-full p-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          )}
         </div>
-        <input
-          type="text"
-          className="block w-full pl-11 pr-12 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-full shadow-lg text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow text-base sm:text-lg"
-          placeholder="ค้นหาเครื่องมือที่ต้องการ..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        {search && (
-          <button 
-            onClick={() => setSearch('')}
-            className="absolute inset-y-0 right-4 sm:right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 bg-gray-100 dark:bg-gray-800 rounded-full p-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        )}
+
+        {/* Category Chips Scrollable */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 pt-1 no-scrollbar justify-start sm:justify-center">
+          {CATEGORY_TABS.map(tab => {
+            const isActive = selectedCategory === tab.id
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setSelectedCategory(tab.id)}
+                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all flex-shrink-0 ${
+                  isActive
+                    ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20 scale-105'
+                    : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-800 hover:border-blue-300 dark:hover:border-blue-700'
+                }`}
+              >
+                {tab.label}
+              </button>
+            )
+          })}
+        </div>
       </div>
 
       {/* Grid */}
       <div className="space-y-12">
-        {/* ⭐ Favorite Tools Section (Rendered on top if user has favorites) */}
-        {isLoaded && favoriteTools.length > 0 && (
+        {/* ⭐ Favorite Tools Section (Rendered on top if user has favorites and in 'all' view) */}
+        {isLoaded && favoriteTools.length > 0 && selectedCategory === 'all' && (
           <section className="bg-gradient-to-br from-amber-50/50 via-yellow-50/30 to-transparent dark:from-amber-950/20 dark:via-yellow-950/10 dark:to-transparent p-4 sm:p-6 rounded-3xl border-2 border-amber-300/80 dark:border-amber-700/50 shadow-sm">
             <div className="flex items-center justify-between mb-6 pb-2 border-b border-amber-200 dark:border-amber-900/60">
               <div className="flex items-center gap-2">
