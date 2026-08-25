@@ -55,6 +55,7 @@ const allCategories: ToolCategory[] = [
   {
     name: '🔥 ยอดฮิต (Popular Tools)',
     tools: [
+      { id: 'tax-calculator', name: 'คำนวณภาษีเงินได้บุคคลธรรมดา', desc: 'คำนวณภาษี ภ.ง.ด. 90/91 พร้อมแจกแจงขั้นบันไดภาษีและค่าลดหย่อน', icon: <Calculator className="w-8 h-8 text-blue-600" />, href: '/tools/tax-calculator' },
       { id: 'gold-price', name: 'ราคาทองวันนี้ (Live)', desc: 'เช็กราคาทองคำแท่ง-รูปพรรณ 96.5% อัปเดตเรียลไทม์ พร้อมคำนวณค่าน้ำหนัก', icon: <Coins className="w-8 h-8 text-amber-500" />, href: '/tools/gold-price' },
       { id: 'lottery', name: 'ตรวจสลากกินแบ่งฯ', desc: 'ตรวจหวยงวดล่าสุด อัปเดตไวสุด เช็กง่ายได้เงินจริง', icon: <Coins className="w-8 h-8 text-blue-500" />, href: '/tools/lottery' },
       { id: 'split-bill', name: 'ระบบหารบิลแยกรายการ', desc: 'หารค่าอาหารตามจริง ใครกินอะไรจ่ายอันนั้น รองรับ VAT และ Service Charge', icon: <Receipt className="w-8 h-8 text-emerald-500" />, href: '/tools/split-bill' },
@@ -148,6 +149,7 @@ const allCategories: ToolCategory[] = [
   {
     name: 'Finance & Calculators',
     tools: [
+      { id: 'tax-calculator', name: 'คำนวณภาษีเงินได้บุคคลธรรมดา', desc: 'คำนวณภาษี ภ.ง.ด. 90/91 พร้อมแจกแจงขั้นบันไดภาษีและค่าลดหย่อน', icon: <Calculator className="w-8 h-8 text-blue-600" />, href: '/tools/tax-calculator' },
       { id: 'gold-price', name: 'ราคาทองวันนี้ (Live)', desc: 'เช็กราคาทองคำแท่ง-รูปพรรณ 96.5% อัปเดตเรียลไทม์ พร้อมคำนวณค่าน้ำหนัก', icon: <Coins className="w-8 h-8 text-amber-500" />, href: '/tools/gold-price' },
       { id: 'split-bill', name: 'ระบบหารบิลแยกรายการ', desc: 'หารค่าอาหารตามจริง ใครกินอะไรจ่ายอันนั้น รองรับ VAT และ Service Charge', icon: <Receipt className="w-8 h-8 text-emerald-500" />, href: '/tools/split-bill' },
       ...financeTools.map(t => {
