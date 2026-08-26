@@ -31,7 +31,8 @@ import {
   ShieldAlert,
   Star,
   Home,
-  FileImage
+  FileImage,
+  Banknote
 } from 'lucide-react'
 import * as LucideIcons from 'lucide-react'
 import toast from 'react-hot-toast'
@@ -57,6 +58,7 @@ const allCategories: ToolCategory[] = [
   {
     name: '🔥 ยอดฮิต (Popular Tools)',
     tools: [
+      { id: 'salary-calculator', name: 'คำนวณเงินเดือนสุทธิ & สลิปเงินเดือน', desc: 'คำนวณเงินเดือนสุทธิเข้าบัญชีจริง หักประกันสังคม ภาษี กองทุน PVD และพิมพ์สลิป', icon: <Banknote className="w-8 h-8 text-emerald-600" />, href: '/tools/salary-calculator' },
       { id: 'invoice-generator', name: 'ระบบสร้างใบเสนอราคา & ใบเสร็จ', desc: 'สร้างใบเสนอราคา ใบแจ้งหนี้ ใบเสร็จรับเงิน คำนวณ VAT หัก ณ ที่จ่าย พร้อมพิมพ์/บันทึก PDF', icon: <FileText className="w-8 h-8 text-blue-600" />, href: '/tools/invoice-generator' },
       { id: 'heic-converter', name: 'แปลงรูป iPhone (HEIC to JPG)', desc: 'แปลงไฟล์รูปภาพ .HEIC / .HEIF จาก iPhone เป็น JPG หรือ PNG แบบกลุ่ม รวดเร็ว ปลอดภัย', icon: <FileImage className="w-8 h-8 text-emerald-500" />, href: '/tools/heic-converter' },
       { id: 'mortgage-calculator', name: 'คำนวณโปะบ้าน & รีไฟแนนซ์', desc: 'คำนวณการโปะเงินเพิ่มรายเดือน/รายปี ช่วยลดดอกเบี้ยกี่แสน และผ่อนบ้านหมดไวขึ้นกี่ปี', icon: <Home className="w-8 h-8 text-indigo-600" />, href: '/tools/mortgage-calculator' },
@@ -155,6 +157,7 @@ const allCategories: ToolCategory[] = [
   {
     name: 'Finance & Calculators',
     tools: [
+      { id: 'salary-calculator', name: 'คำนวณเงินเดือนสุทธิ & สลิปเงินเดือน', desc: 'คำนวณเงินเดือนสุทธิเข้าบัญชีจริง หักประกันสังคม ภาษี กองทุน PVD และพิมพ์สลิป', icon: <Banknote className="w-8 h-8 text-emerald-600" />, href: '/tools/salary-calculator' },
       { id: 'invoice-generator', name: 'ระบบสร้างใบเสนอราคา & ใบเสร็จ', desc: 'สร้างใบเสนอราคา ใบแจ้งหนี้ ใบเสร็จรับเงิน คำนวณ VAT หัก ณ ที่จ่าย พร้อมพิมพ์/บันทึก PDF', icon: <FileText className="w-8 h-8 text-blue-600" />, href: '/tools/invoice-generator' },
       { id: 'mortgage-calculator', name: 'คำนวณโปะบ้าน & รีไฟแนนซ์', desc: 'คำนวณการโปะเงินเพิ่มรายเดือน/รายปี ช่วยลดดอกเบี้ยกี่แสน และผ่อนบ้านหมดไวขึ้นกี่ปี', icon: <Home className="w-8 h-8 text-indigo-600" />, href: '/tools/mortgage-calculator' },
       { id: 'tax-calculator', name: 'คำนวณภาษีเงินได้บุคคลธรรมดา', desc: 'คำนวณภาษี ภ.ง.ด. 90/91 พร้อมแจกแจงขั้นบันไดภาษีและค่าลดหย่อน', icon: <Calculator className="w-8 h-8 text-blue-600" />, href: '/tools/tax-calculator' },
