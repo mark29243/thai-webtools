@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Standalone tools
   const standaloneToolSlugs = [
+    'time-calculator',
     'salary-calculator',
     'tax-calculator',
     'invoice-generator',

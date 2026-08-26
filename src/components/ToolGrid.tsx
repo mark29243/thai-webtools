@@ -32,7 +32,8 @@ import {
   Star,
   Home,
   FileImage,
-  Banknote
+  Banknote,
+  Clock
 } from 'lucide-react'
 import * as LucideIcons from 'lucide-react'
 import toast from 'react-hot-toast'
@@ -58,6 +59,7 @@ const allCategories: ToolCategory[] = [
   {
     name: '🔥 ยอดฮิต (Popular Tools)',
     tools: [
+      { id: 'time-calculator', name: 'เครื่องคิดเลขเวลา (Time Calculator)', desc: 'คำนวณบวก-ลบเวลา หาช่วงห่างเวลา คิดชั่วโมงทำงานและค่าแรง', icon: <Clock className="w-8 h-8 text-blue-500" />, href: '/tools/time-calculator' },
       { id: 'salary-calculator', name: 'คำนวณเงินเดือนสุทธิ & สลิปเงินเดือน', desc: 'คำนวณเงินเดือนสุทธิเข้าบัญชีจริง หักประกันสังคม ภาษี กองทุน PVD และพิมพ์สลิป', icon: <Banknote className="w-8 h-8 text-emerald-600" />, href: '/tools/salary-calculator' },
       { id: 'invoice-generator', name: 'ระบบสร้างใบเสนอราคา & ใบเสร็จ', desc: 'สร้างใบเสนอราคา ใบแจ้งหนี้ ใบเสร็จรับเงิน คำนวณ VAT หัก ณ ที่จ่าย พร้อมพิมพ์/บันทึก PDF', icon: <FileText className="w-8 h-8 text-blue-600" />, href: '/tools/invoice-generator' },
       { id: 'heic-converter', name: 'แปลงรูป iPhone (HEIC to JPG)', desc: 'แปลงไฟล์รูปภาพ .HEIC / .HEIF จาก iPhone เป็น JPG หรือ PNG แบบกลุ่ม รวดเร็ว ปลอดภัย', icon: <FileImage className="w-8 h-8 text-emerald-500" />, href: '/tools/heic-converter' },
@@ -221,8 +223,9 @@ const allCategories: ToolCategory[] = [
     ]
   },
   {
-    name: 'Extra Utilities',
+    name: 'Utilities & Everyday',
     tools: [
+      { id: 'time-calculator', name: 'เครื่องคิดเลขเวลา (Time Calculator)', desc: 'คำนวณบวก-ลบเวลา หาช่วงห่างเวลา คิดชั่วโมงทำงานและค่าแรง', icon: <Clock className="w-8 h-8 text-blue-500" />, href: '/tools/time-calculator' },
       { id: 'barcode', name: 'Barcode Generator', desc: 'สร้างบาร์โค้ดสินค้าสากล', icon: <Hash className="w-8 h-8 text-gray-700 dark:text-gray-300" />, href: '/tools/barcode' },
       { id: 'timezone', name: 'Time Zone Converter', desc: 'ดูและเทียบเวลาทั่วโลก', icon: <Calculator className="w-8 h-8 text-blue-500" />, href: '/tools/timezone' },
       { id: 'speed-test', name: 'Internet Speed Test', desc: 'ทดสอบความเร็วอินเทอร์เน็ต', icon: <Activity className="w-8 h-8 text-green-500" />, href: '/tools/speed-test' },
