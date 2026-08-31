@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import { AdSlot } from '@/components/AdSlot'
+import { ShareBar } from '@/components/ShareBar'
 import { 
   Banknote, 
   Printer, 
@@ -594,7 +595,11 @@ export default function SalaryCalculatorPage() {
         </div>
       )}
 
-      <div className="print:hidden">
+      <div className="print:hidden space-y-6">
+        <ShareBar 
+          title="คำนวณเงินเดือนสุทธิ & สลิปเงินเดือนฟรี - Thai WebTools" 
+          description="คำนวณเงินเดือนสุทธิ หักประกันสังคม ภาษี กองทุน PVD และออกสลิปเงินเดือน"
+        />
         <AdSlot />
       </div>
     </div>

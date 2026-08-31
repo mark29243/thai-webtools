@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import { AdSlot } from '@/components/AdSlot'
+import { ShareBar } from '@/components/ShareBar'
 import { 
   Clock, 
   Plus, 
@@ -684,6 +685,10 @@ export default function TimeCalculatorPage() {
         </div>
       )}
 
+      <ShareBar 
+        title="เครื่องคิดเลขเวลา (Time Calculator) - Thai WebTools"
+        description="คำนวณบวก-ลบเวลา หาช่วงห่างเวลา และคิดชั่วโมงทำงานพร้อมค่าแรงฟรี"
+      />
       <AdSlot />
     </div>
   )
