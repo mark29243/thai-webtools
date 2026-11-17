@@ -14,6 +14,7 @@ import {
   FileText, 
   Fingerprint, 
   Dices, 
+  Gamepad2, 
   Binary, 
   Search, 
   Key, 
@@ -214,6 +215,7 @@ const allCategories: ToolCategory[] = [
   {
     name: 'Social & Fun Tools',
     tools: [
+      { id: 'tiktok-live-game', name: 'เกมไลฟ์ TikTok ศึกเรือยาว', desc: 'เกมอินเทอร์แอคทีฟให้คนดูคอมเมนต์พายเรือแข่งกันในไลฟ์', icon: <Gamepad2 className="w-8 h-8 text-pink-500" />, href: '/tools/tiktok-live-game' },
       { id: 'lottery', name: 'ตรวจสลากกินแบ่งฯ', desc: 'ตรวจหวยงวดล่าสุด อัปเดตไวสุด เช็กง่ายได้เงินจริง', icon: <Coins className="w-8 h-8 text-blue-500" />, href: '/tools/lottery' },
       { id: 'random-picker', name: 'Random Name Picker', desc: 'วงล้อสุ่มรายชื่อจับฉลาก', icon: <Dices className="w-8 h-8 text-pink-500" />, href: '/tools/random-picker' },
       { id: 'youtube-thumbnail', name: 'YouTube Thumbnail', desc: 'ดาวน์โหลดรูปหน้าปกคลิป', icon: <ImageIcon className="w-8 h-8 text-red-500" />, href: '/tools/youtube-thumbnail' },

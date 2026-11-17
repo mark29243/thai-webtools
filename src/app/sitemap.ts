@@ -40,6 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     'image-resizer',
     'image-to-pdf',
     'random-picker',
+    'tiktok-live-game',
     'speed-test',
     'password',
     'random-number',
